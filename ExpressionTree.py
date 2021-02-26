@@ -694,9 +694,3 @@ class ExpressionTree:
             return self.root.evaluate(value_dict, show_steps)[0]
         else:
             print("Empty expression!")
-
-def test():
-    et = ExpressionTree("A¬CD∧∨A¬∨")
-    et.inorder_traversal()
-
-#test() 

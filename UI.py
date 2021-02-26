@@ -108,7 +108,7 @@ class UserInterface():
         Prompts the user to enter a string representing a WFF, then stores the proposition as an
         expression tree
         """
-        print(style.YELLOW("[ ¬ : 1 ][ ∨ : 2 ][ ∧ : 3 ][ → : 4 ][ ↔ : 5 ][ ⊤ : 6 ][ ⊥ : 7 ]") + style.RESET(""))
+        print(style.YELLOW("[ ¬ : ! ][ ∨ : | ][ ∧ : & ][ → : > ][ ↔ : ~ ][ ⊤ : 1 ][ ⊥ : 0 ]") + style.RESET(""))
         expr = input(style.BLUE("Insert your expression(with the help of the table above: ") + style.RESET(""))
         expr = self.__convert_str(expr)
         print(expr)
@@ -158,8 +158,6 @@ class UserInterface():
 
         for clause in clauses:
             clause = clause.strip()
-
-            print(clause)
             
             literal_list = []
             for num in clause.split(" "):
@@ -177,8 +175,6 @@ class UserInterface():
 
         for clause in clauses:
             clause = clause.strip()
-
-            print(clause)
             
             literal_list = []
             for num in clause.split(" "):
