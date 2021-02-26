@@ -262,8 +262,8 @@ class ExpressionTree:
     def __idempocy_laws(self, show_steps):
         # Initializing the modified flag with False
         self.__modified_flag = False
-        self.root, string = self.__apply_idempocy(self.root)
-
+        self.root, _ = self.__apply_idempocy(self.root)
+        
         if show_steps == True and self.__modified_flag == True:
             print(style.GREEN("Applying idempocy laws: F∧F ~ F, F∨F ~ F") + style.RESET(""))
             self.inorder_parentheses()
