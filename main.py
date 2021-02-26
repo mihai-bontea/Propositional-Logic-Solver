@@ -1,5 +1,5 @@
 from InfixToPostfix import Conversion
-from ExpressionTree import *
+from ExpressionTree import ExpressionTree
 import copy
 
 class WFPropositionalFormula:

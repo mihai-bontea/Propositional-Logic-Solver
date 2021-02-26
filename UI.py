@@ -57,7 +57,7 @@ class UserInterface():
                 nr_atoms = int(second_line)
                 value_dict = {}
 
-                for i in range(nr_atoms):
+                for _ in range(nr_atoms):
                     line = file.readline()
                     line = line.split()
 
