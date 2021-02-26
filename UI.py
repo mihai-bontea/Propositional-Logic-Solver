@@ -196,8 +196,6 @@ class UserInterface():
 
         for clause in clauses:
             clause = clause.strip()
-
-            print(clause)
             
             literal_list = []
             for num in clause.split(" "):

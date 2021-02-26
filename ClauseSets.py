@@ -246,7 +246,8 @@ class ClauseSet:
             print(style.GREEN("Right branch of branch " + str(branch_id) + " is satisfiable, therefore current branch also satisfiable") + style.RESET(""))
             return (True, interpretation + intr_right)
         else:
-            print(style.RED("Branch " + str(branch_id) + " unsatisfiable on both branches") + style.RESET(""))
+            print(style.RED("Branch " + str(branch_id) + " is unsatisfiable on both branches") + style.RESET(""))
+            return (False, [])
 
 
 class Clause:
