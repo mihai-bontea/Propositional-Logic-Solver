@@ -3,14 +3,14 @@ testing
 
 ## Normal Forms
 
-A formula F is in negation normal form (NNF), iff:
+A formula F is in **negation normal form (NNF)**, iff:
 * F is ⊤ or F is ⊥
 * F is constructed from literals, using only the binary connectives '∧' and '∨'
 
-A formula F is in disjunctive normal form(DNF), iff F has the form F = F1 ∨ ... ∨ Fn, n ≥ 1, and
+A formula F is in **disjunctive normal form(DNF)**, iff F has the form F = F1 ∨ ... ∨ Fn, n ≥ 1, and
 each of F1, ..., Fn is a conjunction of literals.
 
-A formula F is in conjunctive normal form(CNF), iff F has the form F = F1 ∧ ... ∧ Fn, n ≥ 1, and
+A formula F is in **conjunctive normal form(CNF)**, iff F has the form F = F1 ∧ ... ∧ Fn, n ≥ 1, and
 each of F1, ..., Fn is a disjunction of literals.
 
 ### Transformation to NNF
@@ -82,6 +82,11 @@ Similarly, the formula is turned into NNF, and then the following tautologies ar
 
 * F ∨ (G ∧ H) ~ (F ∨ G) ∧ (F ∨ H)
 * (F ∧ G) ∨ H ~ (F ∨ H) ∧ (G ∨ H)
+
+### Example
+
+![cnf](https://user-images.githubusercontent.com/79721547/109398114-4efe7200-7943-11eb-8317-db279fe277e5.png)
+
 
 ## The Resolution Method in Propositional Logic
 
