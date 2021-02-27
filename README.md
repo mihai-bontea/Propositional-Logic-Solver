@@ -44,6 +44,10 @@ do
 answer: "Satisfiable"
 ```
 
+#### Output example:
+
+![Res](https://user-images.githubusercontent.com/79721547/109392142-32ead880-7923-11eb-83f8-3377f00a47eb.png)
+
 </p>
 </details>
 
@@ -67,6 +71,10 @@ answer: "Satisfiable" when none of the rules can be applied
         "Not Satisfiable" when the empty clause is generated
 ```
 
+#### Output example:
+
+![DP](https://user-images.githubusercontent.com/79721547/109392082-d38cc880-7922-11eb-9952-653530650e87.png)
+
 </p>
 </details>
 
@@ -84,8 +92,12 @@ If a single literal L appears in a clause set, remove any instances of ¬L from 
 If a literal occurs only positively or negatively in the clause set, delete all clauses containing it.
 
 * splitting
-The satisfiability of K' is reduced to the satisfiability of K' ∪ {{L}}, K' ∪ {{¬L}}. (K' is satisfiable exactly if one of the two is)
+The satisfiability of K' is reduced to the satisfiability of K' ∪ {{L}}, K' ∪ {{¬L}}. 
+(K' is satisfiable exactly if one of the two is).
 ```
+#### Output example:
+
+![DPLL](https://user-images.githubusercontent.com/79721547/109391999-5cefcb00-7922-11eb-96fd-0bcd9b204487.png)
 
 </p>
 </details>
