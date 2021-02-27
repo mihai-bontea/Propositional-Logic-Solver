@@ -1,6 +1,76 @@
 # Propositional Logic Solver
 testing
 
+## Normal Forms
+
+A formula F is in negation normal form (NNF), iff:
+* F is ⊤ or F is ⊥
+* F is constructed from literals, using only the binary connectives '∧' and '∨'
+
+A formula F is in disjunctive normal form(DNF), iff F has the form F = F1 ∨ ... ∨ Fn, n ≥ 1, and
+each of F1, ..., Fn is a conjunction of literals.
+
+A formula F is in conjunctive normal form(CNF), iff F has the form F = F1 ∧ ... ∧ Fn, n ≥ 1, and
+each of F1, ..., Fn is a disjunction of literals.
+
+### Transformation to NNF
+
+The program is transforming the formula into NNF by applying the following formulae directly on the syntax tree representation 
+of the given formula.
+
+<details><summary>Formulae used in NNF conversion</summary>
+<p>
+
+* Reduction Laws:
+(F ↔ G) ~ (F → G) ∧ (G → F)
+(F → G) ~ (¬F ∨ G)
+
+* Laws of "True" and "False":
+    ¬⊤ ~ ⊥
+    ¬⊥ ~ ⊤
+    F ∨ ⊥ ~ F
+    F ∧ ⊤ ~ F
+    F ∨ ⊤ ~ ⊤
+    F ∧ ⊥ ~ ⊥
+    ⊥ → F ~ ⊤
+    F → ⊤ ~ ⊤
+
+* Idempocy rules:
+F ∧ F ~ F
+F ∨ F ~ F
+
+* Absorbtion Laws:
+F ∨ (F ∧ G) ~ F
+F ∧ (F ∨ G) ~ F
+
+* "Annihilation" Laws:
+F ∨ ¬F ~ ⊤
+F ∧ ¬F ~ ⊥
+F → F ~ ⊤
+
+* Negation Laws:
+¬(¬F) ~ F ("double negation")
+¬(F ∨ G) ~ ¬F ∧ ¬G ("De Morgan")
+¬(F ∧ G) ~ ¬F ∨ ¬G ("De Morgan")
+
+</p>
+</details>
+
+### DNF Transformation
+
+The program transforms the given propositional formula into an equivalent DNF by first transforming it into NNF, and then applying
+the tautologies:
+
+* F ∧ (G ∨ H) ~ (F ∧ G) ∨ (F ∧ H)
+* (F ∨ G) ∧ H ~ (F ∧ H) ∨ (G ∧ H)
+
+### CNF Transformation
+
+Similarly, the formula is turned into NNF, and then the following tautologies are applied:
+
+* F ∨ (G ∧ H) ~ (F ∨ G) ∧ (F ∨ H)
+* (F ∧ G) ∨ H ~ (F ∨ H) ∧ (G ∨ H)
+
 ## The Resolution Method in Propositional Logic
 
 ### Problem statement:
@@ -26,7 +96,7 @@ commonly used by SAT-solvers.
 ### Method of solving
 
 The user can choose one of the following algorithms to determine the satisfiability of the formula. The input format is the same for all of them.
-No steps are skipped, providing a verifiable output which resembles how one would solve the task on paper.
+No steps are skipped, providing a verifiable output which resembles how one would solve the task on paper. **Pseudocode and output examples available below.**
 
 <details><summary>Propositional Resolution</summary>
 <p>
