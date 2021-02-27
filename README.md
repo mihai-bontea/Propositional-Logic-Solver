@@ -34,6 +34,7 @@ No steps are skipped, providing a verifiable output which resembles how one woul
 #### Resolution uses the following algorithm:
 
 ```
+K' := K
 while exists C such that
     C is a propositional resolvent of two clauses in K' and C does not belong to K' already
 do
@@ -46,4 +47,26 @@ answer: "Satisfiable"
 </p>
 </details>
 
+
+<details><summary>Davis-Putnam(DP)</summary>
+<p>
+The Davis-Putnam method is an improvement to Propositional Resolution.
+#### The following three steps are applied:
+
+```
+* the 1-literal rule
+If a single literal L appears in a clause set, remove any instances of ¬L from the other clauses of K.
+
+* the pure literal rule
+If a literal occurs only positively or negatively in the clause set, delete all clauses containing it.
+
+* resolution
+Apply propositional resolution on the remaining clauses.
+
+answer: "Satisfiable" when none of the rules can be applied
+        "Not Satisfiable" when the empty clause is generated
+```
+
+</p>
+</details>
 
