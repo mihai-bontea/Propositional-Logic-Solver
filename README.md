@@ -194,3 +194,7 @@ The satisfiability of K' is reduced to the satisfiability of K' âˆª {{L}}, K' âˆ
 </p>
 </details>
 
+## Acknowledgement
+The theory is taken from DR. Adrian Craciun's lecture notes.
+
+http://staff.fmi.uvt.ro/~adrian.craciun/lectures/logic/pdf/logicNotes.pdf
