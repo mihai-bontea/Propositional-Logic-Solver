@@ -1,5 +1,10 @@
 # Propositional Logic Solver
-testing
+
+## Computing Truth Value
+
+When selecting option 1(computing truth value), the program expects as input a line containing the proposition,
+followed by n lines of atoms and their value. Based on this, a syntax tree is built, which is then used to compute
+the truth value. Syntax errors are caught and pointed out in detail.
 
 ## Normal Forms
 
