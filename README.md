@@ -5,21 +5,35 @@ testing
 
 ### Problem statement:
 
-Decide the satisfiability of a given formula given in "clause form".
+Decide the satisfiability of a formula given in "clause form". A formula is satisfiable if there exists some interpretation
+for which the formula is evaluated to true.
 
 ### Theory basis:
 
-K is a *propositional clause set* iff K is a finite set of propositional clauses.
-C is a *propositional clause* iff C is a finite set of propositional literals.
-L is a *propositional literal* is an atom, or the negation of an atom.
+* K is a *propositional clause set* iff K is a finite set of propositional clauses.
+* C is a *propositional clause* iff C is a finite set of propositional literals.
+* L is a *propositional literal* iff L is an atom, or the negation of an atom.
 
 From any formula, we can obtain, in a natural way, its clause set form, by transforming it into CNF, and reading
 the clauses directly from the disjuncts.
 
-### Method of solving:
+### Input format
 
-Resolution works by the following algorithm:
+The following three algorithms receive the input as 0-separated clauses, where each literal is an integer. The negative integers
+represent the negation of an atom. As an example, the clause set {{A ∨ B}, {A ∨ ¬C}} would be represented as 1 2 0 1 -3. This format is 
+commonly used by SAT-solvers.
 
+### Method of solving
+
+The user can choose one of the following algorithms to determine the satisfiability of the formula. The input format is the same for all of them.
+No steps are skipped, providing a verifiable output which resembles how one would solve the task on paper.
+
+<details><summary>Propositional Resolution</summary>
+<p>
+
+#### Resolution uses the following algorithm:
+
+```python
 while exists C such that
     C is a propositional resolvent of two clauses in K' and C does not belong to K' already
 do
@@ -27,4 +41,9 @@ do
     else K' := K' U {C}
 
 answer: "Satisfiable"
+```
+
+</p>
+</details>
+
 
