@@ -20,7 +20,7 @@ the clauses directly from the disjuncts.
 ### Input format
 
 The following three algorithms receive the input as 0-separated clauses, where each literal is an integer. The negative integers
-represent the negation of an atom. As an example, the clause set {{A ∨ B}, {A ∨ ¬C}} would be represented as 1 2 0 1 -3. This format is 
+represent the negation of an atom. As an example, the clause set **{{A ∨ B}, {A ∨ ¬C}}** would be represented as **1 2 0 1 -3**. This format is 
 commonly used by SAT-solvers.
 
 ### Method of solving
@@ -33,7 +33,7 @@ No steps are skipped, providing a verifiable output which resembles how one woul
 
 #### Resolution uses the following algorithm:
 
-```python
+```
 while exists C such that
     C is a propositional resolvent of two clauses in K' and C does not belong to K' already
 do
