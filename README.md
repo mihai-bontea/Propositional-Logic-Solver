@@ -50,7 +50,7 @@ answer: "Satisfiable"
 
 <details><summary>Davis-Putnam(DP)</summary>
 <p>
-The Davis-Putnam method is an improvement to Propositional Resolution.
+
 #### The following three steps are applied:
 
 ```
@@ -65,6 +65,26 @@ Apply propositional resolution on the remaining clauses.
 
 answer: "Satisfiable" when none of the rules can be applied
         "Not Satisfiable" when the empty clause is generated
+```
+
+</p>
+</details>
+
+
+<details><summary>Davis-Putnam Logemann Loveland(DPLL)</summary>
+<p>
+
+#### The following three steps are applied:
+
+```
+* the 1-literal rule
+If a single literal L appears in a clause set, remove any instances of ¬L from the other clauses of K.
+
+* the pure literal rule
+If a literal occurs only positively or negatively in the clause set, delete all clauses containing it.
+
+* splitting
+The satisfiability of K' is reduced to the satisfiability of K' ∪ {{L}}, K' ∪ {{¬L}}. (K' is satisfiable exactly if one of the two is)
 ```
 
 </p>
