@@ -6,6 +6,9 @@ When selecting option 1(computing truth value), the program expects as input a l
 followed by n lines of atoms and their value. Based on this, a syntax tree is built, which is then used to compute
 the truth value. Syntax errors are caught and pointed out in detail.
 
+The program allows formulas given in **relaxed syntax**, by assigning different priorities for the *propositional connectives*.
+The order followed is: ↔, →, ∨, ∧, ¬ (decreasing).
+
 ## Normal Forms
 
 A formula F is in **negation normal form (NNF)**, iff:

@@ -7,7 +7,6 @@ class WFPropositionalFormula:
     def __init__(self, from_str):
         
         # This class variable will store the string of the expression
-        # Removing all empty spaces from the string then storing it
         self.__expression = copy.deepcopy(from_str)
         self.__expression_tree = None
         self.__postfix = ""
@@ -49,11 +48,8 @@ class WFPropositionalFormula:
 
         self.__back({}, 0)
 
-        #print(self.__interpretations)
-
         all_true = True
         one_true = False
-
 
         for intr in self.__interpretations:
             if self.__expression_tree.comp_truth_value(intr, False) == False:
