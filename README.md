@@ -22,36 +22,48 @@ of the given formula.
 <p>
 
 * Reduction Laws:
+```
 (F ↔ G) ~ (F → G) ∧ (G → F)
 (F → G) ~ (¬F ∨ G)
+```
 
 * Laws of "True" and "False":
-    ¬⊤ ~ ⊥
-    ¬⊥ ~ ⊤
-    F ∨ ⊥ ~ F
-    F ∧ ⊤ ~ F
-    F ∨ ⊤ ~ ⊤
-    F ∧ ⊥ ~ ⊥
-    ⊥ → F ~ ⊤
-    F → ⊤ ~ ⊤
+```
+¬⊤ ~ ⊥
+¬⊥ ~ ⊤
+F ∨ ⊥ ~ F
+F ∧ ⊤ ~ F
+F ∨ ⊤ ~ ⊤
+F ∧ ⊥ ~ ⊥
+⊥ → F ~ ⊤
+F → ⊤ ~ ⊤
+```
 
 * Idempocy rules:
+```
 F ∧ F ~ F
 F ∨ F ~ F
+```
 
 * Absorbtion Laws:
+```
 F ∨ (F ∧ G) ~ F
 F ∧ (F ∨ G) ~ F
+```
 
 * "Annihilation" Laws:
+```
 F ∨ ¬F ~ ⊤
 F ∧ ¬F ~ ⊥
 F → F ~ ⊤
+```
 
 * Negation Laws:
+```
 ¬(¬F) ~ F ("double negation")
 ¬(F ∨ G) ~ ¬F ∧ ¬G ("De Morgan")
 ¬(F ∧ G) ~ ¬F ∨ ¬G ("De Morgan")
+```
 
 </p>
 </details>
