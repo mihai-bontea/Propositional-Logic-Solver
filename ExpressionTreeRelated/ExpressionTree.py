@@ -72,6 +72,8 @@ class ExpressionTree:
         # Keeps track of whether the loop modifies the formula: we stop when it doesn't
         self.__global_modified_flag = True
 
+        # TODO: we might miss to do some needed changes because last law didn't happen(each law sets the flag to false
+        # at the beginning)
         while self.__global_modified_flag == True:
             self.__global_modified_flag = False
 
@@ -175,34 +177,6 @@ class ExpressionTree:
             # print(style.GREEN("Applying idempocy laws: F∧F ~ F, F∨F ~ F") + style.RESET(""))
             self.inorder_parentheses()
             self.__global_modified_flag = True
-
-    def __apply_idempocy(self, node):
-        str_left = ""
-        str_right = ""
-
-        # Binary connectives
-        if node.value in CONNECTIVES:
-            node.left, str_left = self.__apply_idempocy(node.left)
-            node.right, str_right = self.__apply_idempocy(node.right)
-        # Unary connective
-        elif node.value == NEG:
-            node.left, str_left = self.__apply_idempocy(node.left)
-        # Atom
-        else:
-            return (node, node.value)
-
-        # Or / And connective
-        if (node.value == DISJ or node.value == CONJ) and str_left == str_right:
-            # Return the node containing the child(Apply idempocy)
-            # Set the modified flag to True
-            self.__modified_flag = True
-            return (node.left, str_left)
-        elif node.value in CONNECTIVES:
-            return (node, '(' + str_left + node.value + str_right + ')')
-        elif node.value == NEG:
-            return (node, '(' + node.value + str_left + ')')
-        else:
-            return (node, node.value)
 
     """ ###########################################################################
                                 Annihilation laws functions 
@@ -584,15 +558,11 @@ class ExpressionTree:
         return node
 
     """ ########################################################################### """
-
-    def inorder_traversal(self):
-        if self.root != None:
-            self.root.inorder()
     
     def inorder_parentheses(self):
         if self.root != None:
             # print(style.CYAN(self.root.inorder_parentheses()) + style.RESET(""))
-            pass
+            return self.root.inorder_parentheses()
 
     def comp_truth_value(self, value_dict, show_steps):
         """
