@@ -3,15 +3,14 @@ from ExpressionTree import ExpressionTree
 from LogicOperators import *
 
 class IdempocyLawTransformer(LawTransformerBase):
+    law_description = "Applying idempocy laws: F{}F ~ F, F{}F ~ F".format(DISJ, CONJ)
+    
     def apply_law(expression_tree : ExpressionTree)->str:
-        law_description = "Applying idempocy laws: F{}F ~ F, F{}F ~ F".format(DISJ, CONJ)
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root, result_str = IdempocyLawTransformer.apply_idempocy(expression_tree.root)
 
         if prev_str != result_str:
-            # print("Prev: " + prev_str)
-            # print("After: " + result_str)
-            return "{}\n{}".format(law_description, result_str)
+            return "{}\n{}".format(IdempocyLawTransformer.law_description, result_str)
         return ""
 
     @staticmethod
