@@ -58,10 +58,10 @@ class ExpressionTree:
     def convert_to_NNF(self, show_steps):
         
         # Applying the idempocy laws
-        self.__idempocy_laws(show_steps)
+        # self.__idempocy_laws(show_steps)
 
         # Applying the annihilation laws
-        self.__annihilation_laws(show_steps)
+        # self.__annihilation_laws(show_steps)
 
         # Applying the laws of true and false
         self.__true_false_laws(show_steps)
@@ -77,8 +77,8 @@ class ExpressionTree:
         while self.__global_modified_flag == True:
             self.__global_modified_flag = False
 
-            self.__idempocy_laws(show_steps)
-            self.__annihilation_laws(show_steps)
+            # self.__idempocy_laws(show_steps)
+            # self.__annihilation_laws(show_steps)
             self.__true_false_laws(show_steps)
             self.__negation_laws(show_steps)
         
@@ -163,98 +163,6 @@ class ExpressionTree:
             self.__reduce_impl(node.left)
         if node.right != None:
             self.__reduce_impl(node.right)
-
-    """ ###########################################################################
-                                Idempocy laws functions
-    """
-
-    def __idempocy_laws(self, show_steps):
-        # Initializing the modified flag with False
-        self.__modified_flag = False
-        self.root, _ = self.__apply_idempocy(self.root)
-        
-        if show_steps == True and self.__modified_flag == True:
-            # print(style.GREEN("Applying idempocy laws: F∧F ~ F, F∨F ~ F") + style.RESET(""))
-            self.inorder_parentheses()
-            self.__global_modified_flag = True
-
-    """ ###########################################################################
-                                Annihilation laws functions 
-    """
-
-    def __annihilation_laws(self, show_steps):
-        # Initializing the modified flag with False
-        self.__modified_flag = False
-        self.__apply_annihilation(self.root)
-        
-        if show_steps == True and self.__modified_flag == True:
-            # print(style.GREEN("Applying annihilation laws: F∨¬F ~ ⊤, F∧¬F ~ ⊥") + style.RESET(""))
-            self.inorder_parentheses()
-            self.__global_modified_flag = True
-
-    def __apply_annihilation(self, node):
-        str_left = ""
-        str_right = ""
-
-        # Binary connectives
-        if node.value in CONNECTIVES:
-            str_left = self.__apply_annihilation(node.left)
-            str_right = self.__apply_annihilation(node.right)
-        # Unary connective
-        elif node.value == NEG:
-            str_left = self.__apply_annihilation(node.left)
-        # Atom
-        else:
-            return node.value
-        
-        # Implication + Annihilation
-        if node.value == IMPL and str_left == str_right:
-            # Setting the modified flag to True
-            self.__modified_flag = True
-            # Changing the value of the node to 'T'
-            node.value = TOP
-            
-            # Deleting the children nodes
-            node.left = None
-            node.right = None
-
-            return node.value
-        
-        # Disjunction + Annihilation
-        elif node.value == DISJ and ('(¬' + str_left + ')' == str_right or str_left == '(¬' + str_right + ')'):
-            # Setting the modified flag to True
-            self.__modified_flag = True
-            # Changing the value of the node to 'T'
-            node.value = TOP
-
-            # Deleting the children nodes
-            node.left = None
-            node.right = None
-
-            return node.value
-        
-        # Conjunction + Annihilation
-        elif node.value == CONJ and ('(¬' + str_left + ')' == str_right or str_left == '(¬' + str_right + ')'):
-            # Setting the modified flag to True
-            self.__modified_flag = True
-            # Changing the value of the node to '⊥'
-            node.value = BOT
-
-            # Deleting the children nodes
-            node.left = None
-            node.right = None
-
-            return node.value
-        
-        # Binary connective
-        elif node.value in CONNECTIVES:
-            return '(' + str_left + node.value + str_right + ')'
-        # Unary connective(negation)
-        elif node.value == NEG:
-            return '(' + node.value + str_left + ')'
-        # Atom
-        else:
-            return node.value
     
     """ ###########################################################################
                                 Laws of True and False functions

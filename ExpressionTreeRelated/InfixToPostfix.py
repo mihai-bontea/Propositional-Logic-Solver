@@ -124,5 +124,3 @@ class InfixToPostfixConverter:
             return False
         
         return ("".join(output))
-    
-print(InfixToPostfixConverter.attempt_conversion("(A→B)→C()"))
