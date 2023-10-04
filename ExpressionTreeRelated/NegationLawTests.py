@@ -20,6 +20,16 @@ class TestNegationLawTransformer(unittest.TestCase):
         postfix = InfixToPostfixConverter.attempt_conversion("(¬(¬(¬(¬(¬A)))))")
         expression_tree = ExpressionTree(postfix)
         self.assertEqual(self.law_description + "(¬A)", NegationLawTransformer.apply_law(expression_tree))
+    
+    def test_other_negation_law1(self):
+        postfix = InfixToPostfixConverter.attempt_conversion("(¬(A→B))")
+        expression_tree = ExpressionTree(postfix)
+        self.assertEqual(self.law_description + "(A∧(¬B))", NegationLawTransformer.apply_law(expression_tree))
+
+    def test_other_negation_law2(self):
+        postfix = InfixToPostfixConverter.attempt_conversion("(¬(A↔B))")
+        expression_tree = ExpressionTree(postfix)
+        self.assertEqual(self.law_description + "(A↔(¬B))", NegationLawTransformer.apply_law(expression_tree))
 
 
 if __name__ == '__main__':
