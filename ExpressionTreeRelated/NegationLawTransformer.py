@@ -26,14 +26,14 @@ class NegationLawTransformer(LawTransformerBase):
 
             # Counting the number of consecutive negations
             while current_node.left.value == NEG:
-                count += 1
+                neg_count += 1
                 current_node = current_node.left
             
             # Recur down the tree first
             current_node.left = NegationLawTransformer.apply_double_negation(current_node.left)
 
             # If there is an even amount of negations, return the child of the last negation
-            if count % 2 == 0:
+            if neg_count % 2 == 0:
                 return current_node.left
             # Else return the last negation in the subtree
             else:
