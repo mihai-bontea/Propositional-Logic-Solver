@@ -64,7 +64,7 @@ class ExpressionTree:
         # self.__annihilation_laws(show_steps)
 
         # Applying the laws of true and false
-        self.__true_false_laws(show_steps)
+        # self.__true_false_laws(show_steps)
         
         # Applying the reduction laws to eliminate equivalences and implications
         self.__reduction_laws(show_steps)
@@ -79,7 +79,7 @@ class ExpressionTree:
 
             # self.__idempocy_laws(show_steps)
             # self.__annihilation_laws(show_steps)
-            self.__true_false_laws(show_steps)
+            # self.__true_false_laws(show_steps)
             self.__negation_laws(show_steps)
         
     """ ###########################################################################
@@ -163,95 +163,6 @@ class ExpressionTree:
             self.__reduce_impl(node.left)
         if node.right != None:
             self.__reduce_impl(node.right)
-    
-    """ ###########################################################################
-                                Laws of True and False functions
-    """
-
-    def __true_false_laws(self, show_steps):
-        # Initializing the modified flag with False
-        self.__modified_flag = False
-        self.root = self.__apply_true_false(self.root)
-
-        if show_steps == True and self.__modified_flag == True:
-            # print(style.GREEN("Applying laws of 'True' and 'False': ") + style.RESET(""))
-            self.inorder_parentheses()
-            self.__global_modified_flag = True
-
-    def __apply_true_false(self, node):
-        
-        # Binary connective
-        if node.value in CONNECTIVES:
-            node.left = self.__apply_true_false(node.left)
-            node.right = self.__apply_true_false(node.right)
-        
-        # Unary connective
-        elif node.value == NEG:
-            node.left = self.__apply_true_false(node.left)
-        # Atom
-        else:
-            return node
-
-        # Negation
-        if node.value == NEG:
-            if node.left.value == TOP:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                node.value = BOT
-                node.left = None
-                return node
-            elif node.left.value == BOT:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                node.value = TOP
-                node.left = None
-                return node
-        # Disjunction
-        elif node.value == DISJ:
-            if node.left.value == BOT:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                return node.right
-            elif node.right.value == BOT:
-                # Setting the modified flag to True
-                self.__modified_flag = True 
-                return node.left
-            elif node.left.value == TOP:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                return node.left
-            elif node.right.value == TOP:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                return node.right
-        # Conjunction
-        elif node.value == CONJ:
-            if node.left.value == TOP:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                return node.right
-            elif node.right.value == TOP:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                return node.left
-            elif node.left.value == BOT:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                return node.left
-            elif node.right.value == BOT:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                return node.right
-        # Implication
-        elif node.value == IMPL and (node.left.value == BOT or node.right.value == TOP):
-            if node.left.value == BOT:
-                # Setting the modified flag to True
-                self.__modified_flag = True
-                node.value = TOP
-                node.left = None
-                return node
-        
-        return node   
  
     """ ########################################################################### """
 
