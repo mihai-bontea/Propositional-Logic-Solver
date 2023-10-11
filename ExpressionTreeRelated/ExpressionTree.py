@@ -97,35 +97,11 @@ class ExpressionTree:
 
         # Initializing the modified flag with False
         self.__modified_flag = False
-        self.__reduce_impl_wrapper()
+        # self.__reduce_impl_wrapper()
         
         if show_steps == True and self.__modified_flag == True:
             # print(style.GREEN("Reducing implications: (F→G) ~ (¬F∨G)") + style.RESET(""))
             self.inorder_parentheses()
-
-    def __reduce_impl_wrapper(self):
-        self.__reduce_impl(self.root)
-    
-    def __reduce_impl(self, node):
-        if node.value == IMPL:
-            # Setting the modified flag to True
-            self.__modified_flag = True
-
-            # Changing the node value to '∨'
-            node.value = DISJ
-
-            # Creating a new left child for the current node, containing '¬'
-            new_left = ExpressionTreeNode(NEG)
-            new_left.left = node.left
-
-            # Updating the children of node
-            node.left = new_left
-
-        # Call the function for its children
-        if node.left != None:
-            self.__reduce_impl(node.left)
-        if node.right != None:
-            self.__reduce_impl(node.right)
  
     """ ########################################################################### """
 
