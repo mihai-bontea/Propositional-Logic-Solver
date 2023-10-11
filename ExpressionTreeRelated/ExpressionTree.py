@@ -67,7 +67,7 @@ class ExpressionTree:
         # self.__true_false_laws(show_steps)
         
         # Applying the reduction laws to eliminate equivalences and implications
-        self.__reduction_laws(show_steps)
+        # self.__reduction_laws(show_steps)
 
         # Keeps track of whether the loop modifies the formula: we stop when it doesn't
         self.__global_modified_flag = True
@@ -81,27 +81,6 @@ class ExpressionTree:
             # self.__annihilation_laws(show_steps)
             # self.__true_false_laws(show_steps)
             self.__negation_laws(show_steps)
-        
-    """ ###########################################################################
-                                Reduction laws functions
-    """
-
-    def __reduction_laws(self, show_steps):
-        # Initializing the modified flag with False
-        self.__modified_flag = False
-        # self.__reduce_eq_wrapper()
-        
-        if show_steps == True and self.__modified_flag == True:
-            # print(style.GREEN("Reducing equivalences: (F↔G) ~ (F→G)∧(G→F)") + style.RESET(""))
-            self.inorder_parentheses()
-
-        # Initializing the modified flag with False
-        self.__modified_flag = False
-        # self.__reduce_impl_wrapper()
-        
-        if show_steps == True and self.__modified_flag == True:
-            # print(style.GREEN("Reducing implications: (F→G) ~ (¬F∨G)") + style.RESET(""))
-            self.inorder_parentheses()
  
     """ ########################################################################### """
 
