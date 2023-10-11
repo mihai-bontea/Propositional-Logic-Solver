@@ -89,7 +89,7 @@ class ExpressionTree:
     def __reduction_laws(self, show_steps):
         # Initializing the modified flag with False
         self.__modified_flag = False
-        self.__reduce_eq_wrapper()
+        # self.__reduce_eq_wrapper()
         
         if show_steps == True and self.__modified_flag == True:
             # print(style.GREEN("Reducing equivalences: (F↔G) ~ (F→G)∧(G→F)") + style.RESET(""))
@@ -102,43 +102,6 @@ class ExpressionTree:
         if show_steps == True and self.__modified_flag == True:
             # print(style.GREEN("Reducing implications: (F→G) ~ (¬F∨G)") + style.RESET(""))
             self.inorder_parentheses()
-
-    def __reduce_eq_wrapper(self):
-        self.__reduce_eq(self.root)
-
-    def __reduce_eq(self, node):
-        
-        if node.value == EQUIV:
-            # Setting the modified flag to True
-            self.__modified_flag = True
-
-            #Changing the node value to '∧'
-            node.value = CONJ
-
-            # These will be the new children of the current node
-            new_left = ExpressionTreeNode(IMPL)
-            new_right = ExpressionTreeNode(IMPL)
-
-            # Setting the children of the new left child of node
-            new_left.left = node.left
-            new_left.right = node.right
-
-            # Setting the children of the new right child of node
-            new_right.left = node.right
-            new_right.right = node.left
-
-            # Updating the children of node
-            node.left = new_left
-            node.right = new_right
-
-            # Call the function for the new left child(will update for right sub-tree too since references)
-            self.__reduce_eq(node.left)
-        
-        else:
-            if node.left != None:
-                self.__reduce_eq(node.left)
-            if node.right != None:
-                self.__reduce_eq(node.right)
 
     def __reduce_impl_wrapper(self):
         self.__reduce_impl(self.root)
