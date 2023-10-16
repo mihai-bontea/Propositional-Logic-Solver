@@ -10,7 +10,6 @@ class DeMorganLawTransformer(LawTransformerBase):
     def apply_law(expression_tree : ExpressionTree)->str:
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root = DeMorganLawTransformer.apply_de_morgan(expression_tree.root)
-        # expression_tree.root = DeMorganLawTransformer.apply_de_morgan(expression_tree.root)
         result_str = expression_tree.inorder_parentheses()
 
         if prev_str != result_str:
