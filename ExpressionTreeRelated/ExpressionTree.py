@@ -1,8 +1,19 @@
-from ExpressionTreeNode import ExpressionTreeNode
+from ExpressionTreeNode import *
 from LogicOperators import *
 from Stack import Stack
 
+from AbsorbtionLawTransformer import *
+from AnnihilationLawTransformer import *
+from DeMorganLawTransformer import *
+from IdempocyLawTransformer import *
+from NegationLawTransformer import *
+from ReductionLawEquivTransformer import *
+from ReductionLawImplTransformer import *
+from TrueFalseLawTransformer import *
+
 class ExpressionTree:
+    repeating_laws = [AbsorbtionLawTransformer, AnnihilationLawTransformer, IdempocyLawTransformer,
+                          NegationLawTransformer, TrueFalseLawTransformer, DeMorganLawTransformer]
 
     def __init__(self, postfix):
         self.postfix = postfix 
@@ -55,34 +66,42 @@ class ExpressionTree:
      
         return t 
 
-    def convert_to_NNF(self, show_steps):
+    def apply_repeating_laws(self) -> list:
+        steps_str_list = []
         
-        # Applying the idempocy laws
-        # self.__idempocy_laws(show_steps)
-
-        # Applying the annihilation laws
-        # self.__annihilation_laws(show_steps)
-
-        # Applying the laws of true and false
-        # self.__true_false_laws(show_steps)
+        expr_changed = True
+        while expr_changed:
+            expr_changed = False
+            for law in ExpressionTree.repeating_laws:
+                summary_str = law.apply_law(self)
+                if summary_str != "":
+                    steps_str_list.append(summary_str)
+                    expr_changed = True
         
-        # Applying the reduction laws to eliminate equivalences and implications
-        # self.__reduction_laws(show_steps)
+        return steps_str_list
 
-        # Keeps track of whether the loop modifies the formula: we stop when it doesn't
-        self.__global_modified_flag = True
 
-        # TODO: we might miss to do some needed changes because last law didn't happen(each law sets the flag to false
-        # at the beginning)
-        while self.__global_modified_flag == True:
-            self.__global_modified_flag = False
+    def convert_to_NNF(self):
+        steps_str_list = []
+        
+        # First run of all repeating laws
+        steps_str_list.extend(self.apply_repeating_laws)
 
-            # self.__idempocy_laws(show_steps)
-            # self.__annihilation_laws(show_steps)
-            # self.__true_false_laws(show_steps)
-            self.__negation_laws(show_steps)
- 
-    """ ########################################################################### """
+        # Reducing equivalences
+        reduce_equiv_summary = ReductionLawEquivTransformer.apply_law(self)
+        if reduce_equiv_summary != "":
+            steps_str_list.append(reduce_equiv_summary)
+        
+        # Second run of all repeating laws
+        steps_str_list.extend(self.apply_repeating_laws)
+
+        # Reducing implications
+        reduce_impl_summary = ReductionLawImplTransformer.apply_law(self)
+        if reduce_impl_summary != "":
+            steps_str_list.append(reduce_impl_summary)
+
+        # Last run of all repeating laws
+        steps_str_list.extend(self.apply_repeating_laws)
 
     def convert_to_DNF(self):
         # Initializing the modified flag with False
