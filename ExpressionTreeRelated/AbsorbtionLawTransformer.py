@@ -53,7 +53,6 @@ class AbsorbtionLawTransformer(LawTransformerBase):
 
             right_child_info = AbsorbtionLawTransformer.apply_absorbtion(node.right)
             node.right = right_child_info.node
-            # change into a function, account for negation
             str_right = right_child_info.get_resulting_str()
 
             if node.value in (DISJ, CONJ):
