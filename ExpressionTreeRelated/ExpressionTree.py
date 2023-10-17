@@ -1,6 +1,7 @@
 from ExpressionTreeNode import *
 from LogicOperators import *
 from Stack import Stack
+from InfixToPostfix import InfixToPostfixConverter
 
 from AbsorbtionLawTransformer import *
 from AnnihilationLawTransformer import *
@@ -85,7 +86,7 @@ class ExpressionTree:
         steps_str_list = []
         
         # First run of all repeating laws
-        steps_str_list.extend(self.apply_repeating_laws)
+        steps_str_list.extend(self.apply_repeating_laws())
 
         # Reducing equivalences
         reduce_equiv_summary = ReductionLawEquivTransformer.apply_law(self)
@@ -93,7 +94,7 @@ class ExpressionTree:
             steps_str_list.append(reduce_equiv_summary)
         
         # Second run of all repeating laws
-        steps_str_list.extend(self.apply_repeating_laws)
+        steps_str_list.extend(self.apply_repeating_laws())
 
         # Reducing implications
         reduce_impl_summary = ReductionLawImplTransformer.apply_law(self)
@@ -101,7 +102,9 @@ class ExpressionTree:
             steps_str_list.append(reduce_impl_summary)
 
         # Last run of all repeating laws
-        steps_str_list.extend(self.apply_repeating_laws)
+        steps_str_list.extend(self.apply_repeating_laws())
+
+        return steps_str_list
 
     def convert_to_DNF(self):
         # Initializing the modified flag with False
@@ -189,3 +192,8 @@ class ExpressionTree:
             return self.root.evaluate(value_dict, show_steps)[0]
         else:
             print("Empty expression!")
+
+postfix = InfixToPostfixConverter.attempt_conversion("(A↔B)∧(D∨⊤)")
+expression_tree = ExpressionTree(postfix)
+for summ in expression_tree.convert_to_NNF():
+    print(summ, end="\n\n")

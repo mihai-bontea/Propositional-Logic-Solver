@@ -1,5 +1,4 @@
 from LawTransformerBase import LawTransformerBase
-from ExpressionTree import ExpressionTree
 from ExpressionTreeNode import ExpressionTreeNode
 from LogicOperators import *
 
@@ -7,7 +6,7 @@ class ReductionLawImplTransformer(LawTransformerBase):
     law_description = "Reducing implications: (F {} G) ~ ({}F {} G)".\
         format(IMPL, NEG, DISJ)
 
-    def apply_law(expression_tree : ExpressionTree)->str:
+    def apply_law(expression_tree)->str:
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root = ReductionLawImplTransformer.apply_reduction_for_impl(expression_tree.root)
         result_str = expression_tree.inorder_parentheses()

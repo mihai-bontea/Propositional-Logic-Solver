@@ -1,11 +1,10 @@
 from LawTransformerBase import LawTransformerBase
-from ExpressionTree import ExpressionTree
 from LogicOperators import *
 
 class IdempocyLawTransformer(LawTransformerBase):
     law_description = "Applying idempocy laws: F{}F ~ F, F{}F ~ F".format(DISJ, CONJ)
     
-    def apply_law(expression_tree : ExpressionTree)->str:
+    def apply_law(expression_tree)->str:
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root, result_str = IdempocyLawTransformer.apply_idempocy(expression_tree.root)
 

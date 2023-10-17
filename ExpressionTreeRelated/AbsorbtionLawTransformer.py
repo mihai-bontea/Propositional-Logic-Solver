@@ -1,5 +1,4 @@
 from LawTransformerBase import LawTransformerBase
-from ExpressionTree import ExpressionTree
 from LogicOperators import *
 
 class ReturnStruct:
@@ -32,7 +31,7 @@ class AbsorbtionLawTransformer(LawTransformerBase):
     law_description = "Applying absorbtion laws: F {} (F {} G) ~ F, F {} (F {} G) ~ F".\
         format(DISJ, CONJ, CONJ, DISJ)
     
-    def apply_law(expression_tree : ExpressionTree)->str:
+    def apply_law(expression_tree)->str:
         prev_str = expression_tree.inorder_parentheses()
 
         root_info = AbsorbtionLawTransformer.apply_absorbtion(expression_tree.root)

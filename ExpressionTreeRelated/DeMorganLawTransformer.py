@@ -1,5 +1,4 @@
 from LawTransformerBase import LawTransformerBase
-from ExpressionTree import ExpressionTree
 from ExpressionTreeNode import ExpressionTreeNode
 from LogicOperators import *
 
@@ -7,7 +6,7 @@ class DeMorganLawTransformer(LawTransformerBase):
     law_description = "Applying De Morgan's laws: {}(F {} G) ~ {}F {} {}G, {}(F {} G) ~ {}G {} {}F".\
         format(NEG, DISJ, NEG, CONJ, NEG, NEG, CONJ, NEG, DISJ, NEG)
 
-    def apply_law(expression_tree : ExpressionTree)->str:
+    def apply_law(expression_tree)->str:
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root = DeMorganLawTransformer.apply_de_morgan(expression_tree.root)
         result_str = expression_tree.inorder_parentheses()

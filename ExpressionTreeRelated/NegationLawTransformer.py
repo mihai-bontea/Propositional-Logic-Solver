@@ -1,5 +1,4 @@
 from LawTransformerBase import LawTransformerBase
-from ExpressionTree import ExpressionTree
 from ExpressionTreeNode import ExpressionTreeNode
 from LogicOperators import *
 
@@ -7,7 +6,7 @@ class NegationLawTransformer(LawTransformerBase):
     law_description = "Applying negation laws: {}({}F) ~ F, {}(F {} G) ~ F {} ({}G), {}(F {} G) ~ F {} ({}G)".\
         format(NEG, NEG, NEG, IMPL, CONJ, NEG, NEG, EQUIV, EQUIV, NEG)
 
-    def apply_law(expression_tree : ExpressionTree)->str:
+    def apply_law(expression_tree)->str:
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root = NegationLawTransformer.apply_double_negation(expression_tree.root)
         expression_tree.root = NegationLawTransformer.apply_other_negation(expression_tree.root)

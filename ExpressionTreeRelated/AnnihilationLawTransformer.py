@@ -1,5 +1,4 @@
 from LawTransformerBase import LawTransformerBase
-from ExpressionTree import ExpressionTree
 from ExpressionTreeNode import ExpressionTreeNode
 from LogicOperators import *
 
@@ -7,7 +6,7 @@ class AnnihilationLawTransformer(LawTransformerBase):
     law_description = "Applying annihilation laws: F {} {}F ~ {}, F {} {}F ~ {}, F {} F ~ {}".\
         format(DISJ, NEG, TOP, CONJ, NEG, BOT, IMPL, TOP)
     
-    def apply_law(expression_tree : ExpressionTree)->str:
+    def apply_law(expression_tree)->str:
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root, result_str = AnnihilationLawTransformer.apply_annihilation(expression_tree.root)
 

@@ -1,12 +1,11 @@
 from LawTransformerBase import LawTransformerBase
-from ExpressionTree import ExpressionTree
 from ExpressionTreeNode import ExpressionTreeNode
 from LogicOperators import *
 
 class TrueFalseLawTransformer(LawTransformerBase):
     law_description = "Applying laws of 'True' and 'False':"
 
-    def apply_law(expression_tree : ExpressionTree)->str:
+    def apply_law(expression_tree)->str:
         prev_str = expression_tree.inorder_parentheses()
         expression_tree.root = TrueFalseLawTransformer.apply_negated_top_or_bot(expression_tree.root)
         expression_tree.root = TrueFalseLawTransformer.apply_true_false_laws(expression_tree.root)
