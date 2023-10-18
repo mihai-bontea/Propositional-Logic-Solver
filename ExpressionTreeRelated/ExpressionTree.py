@@ -11,6 +11,7 @@ from NegationLawTransformer import *
 from ReductionLawEquivTransformer import *
 from ReductionLawImplTransformer import *
 from TrueFalseLawTransformer import *
+from ConversionTautologies import TautologiesConverter
 
 class ExpressionTree:
     repeating_laws = [AbsorbtionLawTransformer, AnnihilationLawTransformer, IdempocyLawTransformer,
@@ -106,79 +107,23 @@ class ExpressionTree:
         return steps_str_list
 
     def convert_to_DNF(self):
-        # Initializing the modified flag with False
-        self.__modified_flag = False
-        self.root = self.__apply_tautologies(self.root, CONJ, DISJ)
-        if self.__modified_flag == True:
-            # print(style.GREEN("Applying A∧(B∨C) ~ (A∧B)∨(A∧C) to reach DNF") + style.RESET(""))
-            self.inorder_parentheses()
-        else:
-            # print(style.RED("No more modifications required to reach DNF.") + style.RESET(""))
-            pass
+        steps_str_list = self.convert_to_NNF()
+        tautologies_summary = TautologiesConverter.apply(self, DISJ, CONJ)
+        if tautologies_summary != "":
+            steps_str_list.append(tautologies_summary)
+        
+        return steps_str_list
 
     def convert_to_CNF(self):
-        # Initializing the modified flag with False
-        self.__modified_flag = False
-        self.root = self.__apply_tautologies(self.root, DISJ, CONJ)
-        if self.__modified_flag == True:
-            # print(style.GREEN("Applying A∨(B∧C) ~ (A∨B)∧(A∨C) to reach CNF") + style.RESET(""))
-            self.inorder_parentheses()
-        else:
-            # print(style.RED("No more modifications required to reach CNF.") + style.RESET(""))
-            pass
-
-    def __apply_tautologies(self, node, primary, secondary):
+        steps_str_list = self.convert_to_NNF()
+        tautologies_summary = TautologiesConverter.apply(self, CONJ, DISJ)
+        if tautologies_summary != "":
+            steps_str_list.append(tautologies_summary)
         
-        if node.left != None:
-            node.left = self.__apply_tautologies(node.left, primary, secondary)
-        if node.right != None:
-            node.right = self.__apply_tautologies(node.right, primary, secondary)
-
-        if node.value == primary and (node.left != None and node.left.value == secondary):
-            self.__modified_flag = True
-            # Changing the value of node.value 
-            node.value = secondary
-
-            # Save the node.left.right
-            temp = node.left.right
-
-            # Changing the value of node.left.value 
-            node.left.value = primary
-            node.left.right = node.right
-
-            # Creating a new node
-            new_right = ExpressionTreeNode(secondary)
-            new_right.left = temp
-            new_right.right = node.right
-
-            node.right = new_right
-
-        elif node.value == primary and (node.right != None and node.right.value == secondary):
-            self.__modified_flag = True
-            # Changing the value of node.value 
-            node.value = secondary
-
-            # Save the node.right.right
-            temp = node.right.left
-
-            # Changing the value of node.right.value 
-            node.right.value = primary
-            node.right.left = node.left
-
-            # Creating a new node
-            new_left = ExpressionTreeNode(primary)
-            new_left.left = node.left
-            new_left.right = temp
-
-            node.left = new_left
-
-        return node
-
-    """ ########################################################################### """
+        return steps_str_list
     
     def inorder_parentheses(self):
         if self.root != None:
-            # print(style.CYAN(self.root.inorder_parentheses()) + style.RESET(""))
             return self.root.inorder_parentheses()
 
     def comp_truth_value(self, value_dict, show_steps):
@@ -191,8 +136,3 @@ class ExpressionTree:
             return self.root.evaluate(value_dict, show_steps)[0]
         else:
             print("Empty expression!")
-
-# postfix = InfixToPostfixConverter.attempt_conversion("(A↔B)∧(D∨⊤)")
-# expression_tree = ExpressionTree(postfix)
-# for summ in expression_tree.convert_to_NNF():
-#     print(summ, end="\n\n")
