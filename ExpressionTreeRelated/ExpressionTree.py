@@ -81,7 +81,6 @@ class ExpressionTree:
         
         return steps_str_list
 
-
     def convert_to_NNF(self):
         steps_str_list = []
         
@@ -193,7 +192,7 @@ class ExpressionTree:
         else:
             print("Empty expression!")
 
-postfix = InfixToPostfixConverter.attempt_conversion("(A↔B)∧(D∨⊤)")
-expression_tree = ExpressionTree(postfix)
-for summ in expression_tree.convert_to_NNF():
-    print(summ, end="\n\n")
+# postfix = InfixToPostfixConverter.attempt_conversion("(A↔B)∧(D∨⊤)")
+# expression_tree = ExpressionTree(postfix)
+# for summ in expression_tree.convert_to_NNF():
+#     print(summ, end="\n\n")
