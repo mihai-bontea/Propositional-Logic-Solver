@@ -18,16 +18,15 @@ class ExpressionTree:
                           NegationLawTransformer, TrueFalseLawTransformer, DeMorganLawTransformer]
 
     def __init__(self, postfix):
-        self.postfix = postfix 
-        self.root = self.__constructTree()
+        self.root = self.constructTree(postfix)
     
     # Returns the root of the constructed tree from the given postfix expression 
-    def __constructTree(self): 
+    def constructTree(self, postfix): 
         # stack = []
         stack = Stack() 
   
         # Traverse through every character of input expression 
-        for char in self.postfix : 
+        for char in postfix : 
   
             # Operand, simply push into stack 
             if char not in CONNECTIVES and char != NEG: 
@@ -82,7 +81,7 @@ class ExpressionTree:
         
         return steps_str_list
 
-    def convert_to_NNF(self):
+    def convert_to_NNF(self) -> list:
         steps_str_list = []
         
         # First run of all repeating laws
@@ -106,7 +105,7 @@ class ExpressionTree:
 
         return steps_str_list
 
-    def convert_to_DNF(self):
+    def convert_to_DNF(self) -> list:
         steps_str_list = self.convert_to_NNF()
         tautologies_summary = TautologiesConverter.apply(self, DISJ, CONJ)
         if tautologies_summary != "":
@@ -114,7 +113,7 @@ class ExpressionTree:
         
         return steps_str_list
 
-    def convert_to_CNF(self):
+    def convert_to_CNF(self) -> list:
         steps_str_list = self.convert_to_NNF()
         tautologies_summary = TautologiesConverter.apply(self, CONJ, DISJ)
         if tautologies_summary != "":
@@ -122,7 +121,7 @@ class ExpressionTree:
         
         return steps_str_list
     
-    def inorder_parentheses(self):
+    def inorder_parentheses(self) -> str:
         if self.root != None:
             return self.root.inorder_parentheses()
 
