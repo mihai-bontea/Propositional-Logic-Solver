@@ -2,14 +2,14 @@ from .ExpressionTreeNode import *
 from .LogicOperators import *
 from .Stack import Stack
 
-from .AbsorbtionLawTransformer import *
-from .AnnihilationLawTransformer import *
-from .DeMorganLawTransformer import *
-from .IdempocyLawTransformer import *
-from .NegationLawTransformer import *
-from .ReductionLawEquivTransformer import *
-from .ReductionLawImplTransformer import *
-from .TrueFalseLawTransformer import *
+from .AbsorbtionLawTransformer import AbsorbtionLawTransformer
+from .AnnihilationLawTransformer import AnnihilationLawTransformer
+from .DeMorganLawTransformer import DeMorganLawTransformer
+from .IdempocyLawTransformer import IdempocyLawTransformer
+from .NegationLawTransformer import NegationLawTransformer
+from .ReductionLawEquivTransformer import ReductionLawEquivTransformer
+from .ReductionLawImplTransformer import ReductionLawImplTransformer
+from .TrueFalseLawTransformer import TrueFalseLawTransformer
 from .ConversionTautologies import TautologiesConverter
 
 class ExpressionTree:
