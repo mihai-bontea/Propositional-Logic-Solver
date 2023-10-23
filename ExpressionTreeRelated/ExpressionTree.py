@@ -1,4 +1,4 @@
-from .ExpressionTreeNode import *
+from .ExpressionTreeNode import ExpressionTreeNode
 from .LogicOperators import *
 from .Stack import Stack
 
