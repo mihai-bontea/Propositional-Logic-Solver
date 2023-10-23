@@ -1,6 +1,6 @@
-from LawTransformerBase import LawTransformerBase
-from ExpressionTreeNode import ExpressionTreeNode
-from LogicOperators import *
+from .LawTransformerBase import LawTransformerBase
+from .ExpressionTreeNode import ExpressionTreeNode
+from .LogicOperators import *
 
 class AnnihilationLawTransformer(LawTransformerBase):
     law_description = "Applying annihilation laws: F {} {}F ~ {}, F {} {}F ~ {}, F {} F ~ {}".\

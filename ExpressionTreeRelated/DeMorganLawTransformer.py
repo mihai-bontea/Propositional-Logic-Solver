@@ -1,6 +1,6 @@
-from LawTransformerBase import LawTransformerBase
-from ExpressionTreeNode import ExpressionTreeNode
-from LogicOperators import *
+from .LawTransformerBase import LawTransformerBase
+from .ExpressionTreeNode import ExpressionTreeNode
+from .LogicOperators import *
 
 class DeMorganLawTransformer(LawTransformerBase):
     law_description = "Applying De Morgan's laws: {}(F {} G) ~ {}F {} {}G, {}(F {} G) ~ {}G {} {}F".\

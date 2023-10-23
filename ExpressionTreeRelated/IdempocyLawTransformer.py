@@ -1,5 +1,5 @@
-from LawTransformerBase import LawTransformerBase
-from LogicOperators import *
+from .LawTransformerBase import LawTransformerBase
+from .LogicOperators import *
 
 class IdempocyLawTransformer(LawTransformerBase):
     law_description = "Applying idempocy laws: F{}F ~ F, F{}F ~ F".format(DISJ, CONJ)

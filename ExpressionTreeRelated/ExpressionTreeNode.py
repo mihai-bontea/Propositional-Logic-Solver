@@ -1,4 +1,4 @@
-from LogicOperators import *
+from .LogicOperators import *
 
 class ExpressionTreeNode: 
     def __init__(self , value):

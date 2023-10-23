@@ -1,5 +1,5 @@
-from Stack import Stack
-from LogicOperators import *
+from .Stack import Stack
+from .LogicOperators import *
 
 class InfixToPostfixConverter:
     @staticmethod       

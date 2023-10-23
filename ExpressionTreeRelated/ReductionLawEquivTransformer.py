@@ -1,6 +1,6 @@
-from LawTransformerBase import LawTransformerBase
-from ExpressionTreeNode import ExpressionTreeNode
-from LogicOperators import *
+from .LawTransformerBase import LawTransformerBase
+from .ExpressionTreeNode import ExpressionTreeNode
+from .LogicOperators import *
 
 class ReductionLawEquivTransformer(LawTransformerBase):
     law_description = "Reducing equivalences: (F {} G) ~ (F {} G) {} (G {} F)".\

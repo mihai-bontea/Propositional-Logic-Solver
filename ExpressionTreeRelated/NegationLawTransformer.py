@@ -1,6 +1,6 @@
-from LawTransformerBase import LawTransformerBase
-from ExpressionTreeNode import ExpressionTreeNode
-from LogicOperators import *
+from .LawTransformerBase import LawTransformerBase
+from .ExpressionTreeNode import ExpressionTreeNode
+from .LogicOperators import *
 
 class NegationLawTransformer(LawTransformerBase):
     law_description = "Applying negation laws: {}({}F) ~ F, {}(F {} G) ~ F {} ({}G), {}(F {} G) ~ F {} ({}G)".\

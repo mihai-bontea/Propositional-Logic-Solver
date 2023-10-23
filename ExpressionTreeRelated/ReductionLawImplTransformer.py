@@ -1,6 +1,6 @@
-from LawTransformerBase import LawTransformerBase
-from ExpressionTreeNode import ExpressionTreeNode
-from LogicOperators import *
+from .LawTransformerBase import LawTransformerBase
+from .ExpressionTreeNode import ExpressionTreeNode
+from .LogicOperators import *
 
 class ReductionLawImplTransformer(LawTransformerBase):
     law_description = "Reducing implications: (F {} G) ~ ({}F {} G)".\

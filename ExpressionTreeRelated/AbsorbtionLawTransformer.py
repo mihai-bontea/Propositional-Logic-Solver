@@ -1,5 +1,5 @@
-from LawTransformerBase import LawTransformerBase
-from LogicOperators import *
+from .LawTransformerBase import LawTransformerBase
+from .LogicOperators import *
 
 class ReturnStruct:
     def __init__(self, node, left_child_str="", right_child_str="") -> None:

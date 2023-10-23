@@ -1,5 +1,5 @@
-from LogicOperators import *
-from ExpressionTreeNode import ExpressionTreeNode
+from .LogicOperators import *
+from .ExpressionTreeNode import ExpressionTreeNode
 
 class TautologiesConverter:
     @staticmethod

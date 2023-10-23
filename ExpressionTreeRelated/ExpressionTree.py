@@ -1,17 +1,16 @@
-from ExpressionTreeNode import *
-from LogicOperators import *
-from Stack import Stack
-from InfixToPostfix import InfixToPostfixConverter
+from .ExpressionTreeNode import *
+from .LogicOperators import *
+from .Stack import Stack
 
-from AbsorbtionLawTransformer import *
-from AnnihilationLawTransformer import *
-from DeMorganLawTransformer import *
-from IdempocyLawTransformer import *
-from NegationLawTransformer import *
-from ReductionLawEquivTransformer import *
-from ReductionLawImplTransformer import *
-from TrueFalseLawTransformer import *
-from ConversionTautologies import TautologiesConverter
+from .AbsorbtionLawTransformer import *
+from .AnnihilationLawTransformer import *
+from .DeMorganLawTransformer import *
+from .IdempocyLawTransformer import *
+from .NegationLawTransformer import *
+from .ReductionLawEquivTransformer import *
+from .ReductionLawImplTransformer import *
+from .TrueFalseLawTransformer import *
+from .ConversionTautologies import TautologiesConverter
 
 class ExpressionTree:
     repeating_laws = [AbsorbtionLawTransformer, AnnihilationLawTransformer, IdempocyLawTransformer,
