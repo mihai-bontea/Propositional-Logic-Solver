@@ -50,8 +50,7 @@ class InfixToPostfixConverter:
                 negation = False
                 oprn_oprt += 1
                 if oprn_oprt > 1:
-                    print("String is not a WFF: expected connective at index " + str(count))
-                    return False
+                    raise ValueError("String is not a WFF: expected connective at index " + str(count))
               
             #'(', push it to stack
             elif char  == '(': 
@@ -64,24 +63,20 @@ class InfixToPostfixConverter:
 
                 open_parentheses -= 1
                 if open_parentheses < 0:
-                    print("String is not a WFF: ')' closed but not opened at index " + str(count))
-                    return False
+                    raise ValueError("String is not a WFF: ')' closed but not opened at index " + str(count))
                 
                 if not stack.is_empty() and stack.top() == '(':
-                    print("String is not a WFF: redundant parentheses closing at index " + str(count))
-                    return False
+                    raise ValueError("String is not a WFF: redundant parentheses closing at index " + str(count))
                 
                 if oprn_oprt < 0 or negation == True:
-                    print("String is not a WFF: expected WFF/Atom at index " + str(count))
-                    return False
+                    raise ValueError("String is not a WFF: expected WFF/Atom at index " + str(count))
 
                 while not stack.is_empty() and stack.top() != '(': 
                     a = stack.pop() 
                     output.append(a) 
 
                 if not stack.is_empty() and stack.top() != '(': 
-                    print("Error")
-                    return False
+                    raise ValueError("String is not a WFF")
                 else: 
                     stack.pop() 
   
@@ -89,14 +84,12 @@ class InfixToPostfixConverter:
             elif InfixToPostfixConverter.is_operator(char):
                 last_connective = count
                 if count == len(exp) - 1:
-                    print("String is not a WFF: expected WFF/Atom at index " + str(count))
-                    return False
+                    raise ValueError("String is not a WFF: expected WFF/Atom at index " + str(count))
                 
                 if char != NEG:
                     oprn_oprt -= 1
                     if oprn_oprt < 0 or negation == True:
-                        print("String is not a WFF: expected WFF/Atom at index " + str(count))
-                        return False
+                        raise ValueError("String is not a WFF: expected WFF/Atom at index " + str(count))
                 else:
                     negation = True
 
@@ -104,23 +97,19 @@ class InfixToPostfixConverter:
                     output.append(stack.pop()) 
                 stack.push(char)
             else:
-                print("String is not a WFF: illegal character at index " + str(count))
-                return False
+                raise ValueError("String is not a WFF: illegal character at index " + str(count))
   
         # pop all the operators left from the stack 
         while not stack.is_empty(): 
             output.append(stack.pop()) 
         
         if open_parentheses != 0:
-            print("String is not a WFF: parentheses not closed properly!")
-            return False
+            return ValueError("String is not a WFF: parentheses not closed properly!")
 
         if negation == True:
-            print("String is not a WFF: no atom/WFF after negation!")
-            return False
+            raise ValueError("String is not a WFF: no atom/WFF after negation!")
         
         if last_connective != -1:
-            print("String is not a WFF: no atom/WFF for connective at index " + str(last_connective))
-            return False
+            raise ValueError("String is not a WFF: no atom/WFF for connective at index " + str(last_connective))
         
         return ("".join(output))
