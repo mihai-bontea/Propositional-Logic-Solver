@@ -21,50 +21,42 @@ class ExpressionTree:
     
     # Returns the root of the constructed tree from the given postfix expression 
     def constructTree(self, postfix): 
-        # stack = []
         stack = Stack() 
   
         # Traverse through every character of input expression 
         for char in postfix : 
-  
             # Operand, simply push into stack 
             if char not in CONNECTIVES and char != NEG: 
-                t = ExpressionTreeNode(char) 
-                # stack.append(t)
-                stack.push(t) 
+                node = ExpressionTreeNode(char) 
+                stack.push(node) 
   
             # Operator 
             else: 
-                
                 # Char is a connective different from negation(unary operator)
                 if char in CONNECTIVES:
                     # Pop two top nodes 
-                    t = ExpressionTreeNode(char) 
-                    t1 = stack.pop() 
-                    t2 = stack.pop() 
+                    node = ExpressionTreeNode(char) 
+                    right_child = stack.pop() 
+                    left_child = stack.pop() 
                 
-                    # make them children 
-                    t.right = t1 
-                    t.left = t2 
+                    # Set child nodes
+                    node.right = right_child
+                    node.left = left_child
               
                     # Add this subexpression to stack 
-                    # stack.append(t)
-                    stack.push(t)
+                    stack.push(node)
                 # Char is negation: will only pop 1 operand from the stack
                 else:
-                    t = ExpressionTreeNode(char)
-                    t1 = stack.pop()
+                    node = ExpressionTreeNode(char)
+                    left_child = stack.pop()
 
                     # Make the operand a child of negation
-                    t.left = t1
+                    node.left = left_child
                     # Add this subexpression to stack
-                    # stack.append(t)
-                    stack.push(t)
+                    stack.push(node)
 
         # Only element  will be the root of expression tree 
-        t = stack.pop() 
-     
-        return t 
+        return stack.pop()
 
     def apply_repeating_laws(self) -> list:
         steps_str_list = []
