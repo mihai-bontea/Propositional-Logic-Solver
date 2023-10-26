@@ -1,5 +1,8 @@
 import tkinter.messagebox
+from typing import Callable, Optional, Tuple, Union
 import customtkinter
+from customtkinter.windows.widgets.font import CTkFont
+from customtkinter.windows.widgets.image import CTkImage
 import pyperclip
 
 from tkinter import filedialog
@@ -10,6 +13,25 @@ customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark",
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 KB_W = 40
+
+class KeyboardButton(customtkinter.CTkButton):
+    def __init__(self, master, textbox, char):
+        kb_font = customtkinter.CTkFont(size=20, weight="bold")
+        kb_size = 40
+        super().__init__(master=master,
+                         text=char,
+                         width=kb_size,
+                         height=kb_size,
+                         font=kb_font,
+                         command=partial(KeyboardButton.insert_char_into_textbox, textbox, char))
+
+    @staticmethod
+    def insert_char_into_textbox(textbox, char):
+        textbox.insert("end", char)
+    
+    def grid(self, row, column, padx, pady, sticky="n"):
+        super().grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)
+        
 
 class GraphicalUserInterface(customtkinter.CTk):
     def __init__(self):
@@ -82,33 +104,26 @@ class GraphicalUserInterface(customtkinter.CTk):
 
         # Make this into a class
 
-        self.conj_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="∧", width=KB_W, height=KB_W, font=kb_font,
-                                                   command=partial(self.insert_char_into_textbox, self.conv_textbox, "∧"))
-        self.conj_button.grid(row=2, column=0, padx=(0, 50), pady=(0, 0), sticky="n")
+        self.conj_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "∧")
+        self.conj_button.grid(row=2, column=0, padx=(0, 50), pady=(0, 0))
 
-        self.disj_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="∨", width=KB_W, height=KB_W, font=kb_font,
-                                                   command=partial(self.insert_char_into_textbox, self.conv_textbox, "∨"))
-        self.disj_button.grid(row=2, column=0, padx=(100, 50), pady=(0, 0), sticky="n")
+        self.disj_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "∨")
+        self.disj_button.grid(row=2, column=0, padx=(100, 50), pady=(0, 0))
 
-        self.impl_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="→", width=KB_W, height=KB_W, font=kb_font,
-                                                   command=partial(self.insert_char_into_textbox, self.conv_textbox, "→"))
-        self.impl_button.grid(row=2, column=0, padx=(200, 50), pady=(0, 0), sticky="n")
+        self.impl_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "→")
+        self.impl_button.grid(row=2, column=0, padx=(200, 50), pady=(0, 0))
 
-        self.equiv_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="↔", width=KB_W, height=KB_W, font=kb_font,
-                                                    command=partial(self.insert_char_into_textbox, self.conv_textbox, "↔"))
-        self.equiv_button.grid(row=2, column=0, padx=(300, 50), pady=(0, 0), sticky="n")
+        self.equiv_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "↔")
+        self.equiv_button.grid(row=2, column=0, padx=(300, 50), pady=(0, 0))
 
-        self.neg_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="¬", width=KB_W, height=KB_W, font=kb_font,
-                                                  command=partial(self.insert_char_into_textbox, self.conv_textbox, "¬"))
-        self.neg_button.grid(row=2, column=0, padx=(400, 50), pady=(0, 0), sticky="n")
+        self.neg_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "¬")
+        self.neg_button.grid(row=2, column=0, padx=(400, 50), pady=(0, 0))
 
-        self.top_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="⊤", width=KB_W, height=KB_W, font=kb_font,
-                                                  command=partial(self.insert_char_into_textbox, self.conv_textbox, "⊤"))
-        self.top_button.grid(row=2, column=0, padx=(500, 50), pady=(0, 0), sticky="n")
+        self.top_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "⊤")
+        self.top_button.grid(row=2, column=0, padx=(500, 50), pady=(0, 0))
 
-        self.bot_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="⊥", width=KB_W, height=KB_W, font=kb_font,
-                                                  command=partial(self.insert_char_into_textbox, self.conv_textbox, "⊥"))
-        self.bot_button.grid(row=2, column=0, padx=(600, 50), pady=(0, 0), sticky="n")
+        self.bot_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "⊥")
+        self.bot_button.grid(row=2, column=0, padx=(600, 50), pady=(0, 0))
 
         self.convert_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Conversion",
                                                              command=partial(self.attempt_encode, self.conv_textbox))
