@@ -84,4 +84,4 @@ class AbsorbtionLawTransformer(LawTransformerBase):
         smaller_exp: str,
         larger_exp: ReturnStruct
         ) -> bool:
-        return smaller_exp == larger_exp.left_child_str or smaller_exp.right_child_info
+        return smaller_exp == larger_exp.left_child_str or smaller_exp == larger_exp.right_child_str
