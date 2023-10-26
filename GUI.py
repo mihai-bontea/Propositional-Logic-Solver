@@ -8,6 +8,7 @@ import pyperclip
 from tkinter import filedialog
 from functools import partial
 from Controller import Controller, ConversionType
+from ExpressionTreeRelated.LogicOperators import *
 
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -99,25 +100,25 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.conv_textbox = customtkinter.CTkTextbox(self.tabview.tab("Conversion"), width=700, height=300, font=textbox_font)
         self.conv_textbox.grid(row=1, column=0, padx=(80, 80), pady=(20, 10), sticky="n")
 
-        self.conj_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "∧")
+        self.conj_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, CONJ)
         self.conj_button.grid(row=2, column=0, padx=(0, 200), pady=(0, 10))
 
-        self.disj_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "∨")
+        self.disj_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, DISJ)
         self.disj_button.grid(row=2, column=0, padx=(100, 200), pady=(0, 10))
 
-        self.impl_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "→")
+        self.impl_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, IMPL)
         self.impl_button.grid(row=2, column=0, padx=(200, 200), pady=(0, 10))
 
-        self.equiv_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "↔")
+        self.equiv_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, EQUIV)
         self.equiv_button.grid(row=2, column=0, padx=(300, 200), pady=(0, 10))
 
-        self.neg_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "¬")
+        self.neg_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, NEG)
         self.neg_button.grid(row=2, column=0, padx=(400, 200), pady=(0, 10))
 
-        self.top_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "⊤")
+        self.top_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, TOP)
         self.top_button.grid(row=3, column=0, padx=(150, 200), pady=(0, 10))
 
-        self.bot_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "⊥")
+        self.bot_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, BOT)
         self.bot_button.grid(row=3, column=0, padx=(250, 200), pady=(0, 10))
 
         self.convert_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Convert",
@@ -166,7 +167,6 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.scaling_optionemenu.set("100%")
         self.conversion_options_menu.set("Conversion type")
         self.decoding_lsb_option_menu.set("LSBs used")
-        # self.convert_button.configure(state="disabled")
         self.copy_button.configure(state="disabled")
         self.decode_button.configure(state="disabled")
 
@@ -195,12 +195,17 @@ class GraphicalUserInterface(customtkinter.CTk):
     def attempt_convert(self):
         self.conv_textbox.tag_config("green_color", foreground="green")
         res = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"), ConversionType.NNF)
-        self.conv_textbox.insert("end", '\n')
-        for prop in res:
-            desc, actual = prop.split('\n')
-            # self.conv_textbox.insert("end", prop + '\n')
-            self.conv_textbox.insert("end", desc + '\n', "green_color")
-            self.conv_textbox.insert("end", actual + '\n')
+
+        if isinstance(res, Exception):
+            self.conv_textbox.insert("end", "HOPAAA\n")
+            print(str(res))
+        else:
+            self.conv_textbox.insert("end", '\n')
+            for prop in res:
+                desc, actual = prop.split('\n')
+                # self.conv_textbox.insert("end", prop + '\n')
+                self.conv_textbox.insert("end", desc + '\n', "green_color")
+                self.conv_textbox.insert("end", actual + '\n')
 
     def attempt_decode(self):
         pass
@@ -209,7 +214,6 @@ class GraphicalUserInterface(customtkinter.CTk):
         textbox.delete("0.0", "end")
 
     
-
 
 if __name__ == "__main__":
     gui = GraphicalUserInterface()
