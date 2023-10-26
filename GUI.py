@@ -12,8 +12,6 @@ from Controller import Controller
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
-KB_W = 40
-
 class KeyboardButton(customtkinter.CTkButton):
     def __init__(self, master, textbox, char):
         kb_font = customtkinter.CTkFont(size=20, weight="bold")
@@ -99,10 +97,6 @@ class GraphicalUserInterface(customtkinter.CTk):
 
         self.conv_textbox = customtkinter.CTkTextbox(self.tabview.tab("Conversion"), width=700, height=100)
         self.conv_textbox.grid(row=1, column=0, padx=(150, 150), pady=(20, 10), sticky="n")
-
-        kb_font=customtkinter.CTkFont(size=20, weight="bold")
-
-        # Make this into a class
 
         self.conj_button = KeyboardButton(self.tabview.tab("Conversion"), self.conv_textbox, "∧")
         self.conj_button.grid(row=2, column=0, padx=(0, 50), pady=(0, 0))
