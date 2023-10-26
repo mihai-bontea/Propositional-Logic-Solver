@@ -29,8 +29,7 @@ class Controller:
             elif conv_type == ConversionType.CNF:
                 return expression_tree.convert_to_CNF()
             
-            else:
-                return expression_tree.convert_to_DNF()
+            return expression_tree.convert_to_DNF()
 
         except Exception as exc:
             return exc
