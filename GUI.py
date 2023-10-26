@@ -9,6 +9,8 @@ from Controller import Controller
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
+KB_W = 40
+
 class GraphicalUserInterface(customtkinter.CTk):
     def __init__(self):
         super().__init__()
@@ -73,32 +75,43 @@ class GraphicalUserInterface(customtkinter.CTk):
                                                                     #   command=self.encoding_upload_action)
         # self.encoding_file_selection_button.grid(row=1, column=0, padx=(0, 250), pady=(10, 10))
 
-        self.encoding_textbox = customtkinter.CTkTextbox(self.tabview.tab("Conversion"), width=10)
-        self.encoding_textbox.grid(row=1, column=0, padx=(150, 150), pady=(50, 50), sticky="nsew")
+        self.conv_textbox = customtkinter.CTkTextbox(self.tabview.tab("Conversion"), width=700, height=100)
+        self.conv_textbox.grid(row=1, column=0, padx=(150, 150), pady=(20, 10), sticky="n")
 
-        self.conj_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="∧", width=15, anchor="center")
+        kb_font=customtkinter.CTkFont(size=20, weight="bold")
+
+        # Make this into a class
+
+        self.conj_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="∧", width=KB_W, height=KB_W, font=kb_font,
+                                                   command=partial(self.insert_char_into_textbox, self.conv_textbox, "∧"))
         self.conj_button.grid(row=2, column=0, padx=(0, 50), pady=(0, 0), sticky="n")
 
-        self.disj_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="∨", width=15)
-        self.disj_button.grid(row=2, column=0, padx=(48, 50), pady=(0, 0), sticky="n")
+        self.disj_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="∨", width=KB_W, height=KB_W, font=kb_font,
+                                                   command=partial(self.insert_char_into_textbox, self.conv_textbox, "∨"))
+        self.disj_button.grid(row=2, column=0, padx=(100, 50), pady=(0, 0), sticky="n")
 
-        self.impl_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="→", width=15)
-        self.impl_button.grid(row=2, column=0, padx=(100, 50), pady=(0, 0), sticky="n")
+        self.impl_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="→", width=KB_W, height=KB_W, font=kb_font,
+                                                   command=partial(self.insert_char_into_textbox, self.conv_textbox, "→"))
+        self.impl_button.grid(row=2, column=0, padx=(200, 50), pady=(0, 0), sticky="n")
 
-        self.equiv_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="↔", width=15)
-        self.equiv_button.grid(row=2, column=0, padx=(160, 50), pady=(0, 0), sticky="n")
+        self.equiv_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="↔", width=KB_W, height=KB_W, font=kb_font,
+                                                    command=partial(self.insert_char_into_textbox, self.conv_textbox, "↔"))
+        self.equiv_button.grid(row=2, column=0, padx=(300, 50), pady=(0, 0), sticky="n")
 
-        self.neg_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="¬", width=15)
-        self.neg_button.grid(row=2, column=0, padx=(210, 50), pady=(0, 0), sticky="n")
+        self.neg_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="¬", width=KB_W, height=KB_W, font=kb_font,
+                                                  command=partial(self.insert_char_into_textbox, self.conv_textbox, "¬"))
+        self.neg_button.grid(row=2, column=0, padx=(400, 50), pady=(0, 0), sticky="n")
 
-        self.top_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="⊤", width=15)
-        self.top_button.grid(row=2, column=0, padx=(260, 50), pady=(0, 0), sticky="n")
+        self.top_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="⊤", width=KB_W, height=KB_W, font=kb_font,
+                                                  command=partial(self.insert_char_into_textbox, self.conv_textbox, "⊤"))
+        self.top_button.grid(row=2, column=0, padx=(500, 50), pady=(0, 0), sticky="n")
 
-        self.bot_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="⊥", width=15)
-        self.bot_button.grid(row=2, column=0, padx=(310, 50), pady=(0, 0), sticky="n")
+        self.bot_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="⊥", width=KB_W, height=KB_W, font=kb_font,
+                                                  command=partial(self.insert_char_into_textbox, self.conv_textbox, "⊥"))
+        self.bot_button.grid(row=2, column=0, padx=(600, 50), pady=(0, 0), sticky="n")
 
         self.convert_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Conversion",
-                                                             command=partial(self.attempt_encode, self.encoding_textbox))
+                                                             command=partial(self.attempt_encode, self.conv_textbox))
         self.convert_button.grid(row=0, column=0, padx=(250, 0), pady=(10, 10))
 
         self.copy_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Download to PDF",
@@ -142,7 +155,6 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.convert_button.configure(state="disabled")
         self.copy_button.configure(state="disabled")
         self.decode_button.configure(state="disabled")
-        self.encoding_textbox.insert("0.0", "Write the secret message here...")
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -171,6 +183,9 @@ class GraphicalUserInterface(customtkinter.CTk):
 
     def attempt_decode(self):
         pass
+
+    def insert_char_into_textbox(self, textbox, char):
+        textbox.insert("end", char)
 
 
 if __name__ == "__main__":
