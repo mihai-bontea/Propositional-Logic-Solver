@@ -7,7 +7,7 @@ import pyperclip
 
 from tkinter import filedialog
 from functools import partial
-from Controller import Controller
+from Controller import Controller, ConversionType
 
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -121,7 +121,7 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.bot_button.grid(row=3, column=0, padx=(250, 200), pady=(0, 10))
 
         self.convert_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Convert",
-                                                             command=partial(self.attempt_encode, self.conv_textbox))
+                                                             command=self.attempt_convert)
         self.convert_button.grid(row=0, column=0, padx=(250, 0), pady=(10, 10))
 
         self.copy_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Download to PDF",
@@ -166,7 +166,7 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.scaling_optionemenu.set("100%")
         self.conversion_options_menu.set("Conversion type")
         self.decoding_lsb_option_menu.set("LSBs used")
-        self.convert_button.configure(state="disabled")
+        # self.convert_button.configure(state="disabled")
         self.copy_button.configure(state="disabled")
         self.decode_button.configure(state="disabled")
 
@@ -192,8 +192,15 @@ class GraphicalUserInterface(customtkinter.CTk):
     def copy_to_clipboard_action(self):
         pyperclip.copy(str(self.mask))
     
-    def attempt_encode(self):
-        pass
+    def attempt_convert(self):
+        self.conv_textbox.tag_config("green_color", foreground="green")
+        res = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"), ConversionType.NNF)
+        self.conv_textbox.insert("end", '\n')
+        for prop in res:
+            desc, actual = prop.split('\n')
+            # self.conv_textbox.insert("end", prop + '\n')
+            self.conv_textbox.insert("end", desc + '\n', "green_color")
+            self.conv_textbox.insert("end", actual + '\n')
 
     def attempt_decode(self):
         pass
