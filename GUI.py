@@ -194,14 +194,16 @@ class GraphicalUserInterface(customtkinter.CTk):
     
     def attempt_convert(self):
         self.conv_textbox.tag_config("green_color", foreground="green")
-        res = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"), ConversionType.NNF)
+        self.conv_textbox.tag_config("red_color", foreground="red")
 
-        if isinstance(res, Exception):
-            self.conv_textbox.insert("end", "HOPAAA\n")
-            print(str(res))
+        result = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"), ConversionType.NNF)
+        self.conv_textbox.insert("end", '\n')
+
+        if isinstance(result, Exception):
+            self.conv_textbox.insert("end", str(result) + '\n', "red_color")
+
         else:
-            self.conv_textbox.insert("end", '\n')
-            for prop in res:
+            for prop in result:
                 desc, actual = prop.split('\n')
                 # self.conv_textbox.insert("end", prop + '\n')
                 self.conv_textbox.insert("end", desc + '\n', "green_color")
