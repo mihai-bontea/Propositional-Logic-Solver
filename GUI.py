@@ -26,7 +26,8 @@ class KeyboardButton(customtkinter.CTkButton):
 
     @staticmethod
     def insert_char_into_textbox(textbox, char):
-        textbox.insert("end", char)
+        cursor_position = textbox.index(customtkinter.INSERT)
+        textbox.insert(cursor_position, char)
     
     def grid(self, row, column, padx, pady, sticky="n"):
         super().grid(row=row, column=column, padx=padx, pady=pady, sticky=sticky)

@@ -84,12 +84,12 @@ class InfixToPostfixConverter:
             elif InfixToPostfixConverter.is_operator(char):
                 last_connective = count
                 if count == len(exp) - 1:
-                    raise ValueError("String is not a WFF: expected WFF/Atom at index " + str(count))
+                    raise ValueError("String is not a WFF: expected WFF/Atom at index " + str(count + 1))
                 
                 if char != NEG:
                     oprn_oprt -= 1
                     if oprn_oprt < 0 or negation == True:
-                        raise ValueError("String is not a WFF: expected WFF/Atom at index " + str(count))
+                        raise ValueError("String is not a WFF: expected WFF/Atom at index " + str(count + 1))
                 else:
                     negation = True
 
