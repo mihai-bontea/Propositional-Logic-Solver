@@ -1,15 +1,19 @@
 import copy
 
 class Clause:
-    def __init__(self, literal_set, index):
+    def __init__(
+        self,
+        literals: set,
+        index: int
+    ):
         self.index = index
-        self.literals = copy.deepcopy(literal_set)
+        self.literals = copy.deepcopy(literals)
         self.times_modified = 0
 
-    def contains_literal(self, literal):
+    def contains_literal(self, literal: int):
         return literal in self.literals
     
-    def remove_literal(self, literal):
+    def remove_literal(self, literal: int):
         self.times_modified += 1
         self.literals.remove(literal)
 
