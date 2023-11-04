@@ -1,7 +1,6 @@
 import copy
 
 class Clause:
-
     def __init__(self, literal_set, index):
         self.index = index
         self.literals = copy.deepcopy(literal_set)
