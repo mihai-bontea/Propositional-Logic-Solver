@@ -18,6 +18,13 @@ class ResolutionTransformer:
         return -literal in literal_count.keys() and literal_count[literal] != 0 and literal_count[-literal] != 0
     
     @classmethod
+    def is_clause_tautology(cls, literals):
+        for literal in literals:
+            if -literal in literals:
+                return True
+        return False
+    
+    @classmethod
     def apply_resolution(cls, clause_set):
         modified = True
         while modified == True:
@@ -30,18 +37,23 @@ class ResolutionTransformer:
                             
                             new_literals = cls.get_new_literals(clause_set.clauses, pair, literal)
                             if new_literals not in clause_set.clauses:
-                                clause_set.add_clause(new_literals)
-
-                                modified = True
+                                if cls.is_clause_tautology(new_literals):
+                                    # print("from ({})({}) we have {}, which is a tautology."\
+                                    #   .format(str(clause_set.clauses[pair[0]].index),
+                                    #   str(clause_set.clauses[pair[1]].index), str(new_literals)))
+                                    pass
+                                else:
+                                    clause_set.add_clause(new_literals)
+                                    modified = True
                         
-                                print("from ({})({}) we have {}"\
-                                      .format(str(clause_set.clauses[pair[0]].index),
-                                      str(clause_set.clauses[pair[1]].index), str(new_literals)))
+                                    print("from ({})({}) we have {}"\
+                                        .format(str(clause_set.clauses[pair[0]].index),
+                                        str(clause_set.clauses[pair[1]].index), str(new_literals)))
 
-                                # We obtained the empty clause!
-                                if len(new_literals) == 0:
-                                    print("We obtained {}, therefore Not Satisfiable")
-                                    return False
+                                    # We obtained the empty clause!
+                                    if len(new_literals) == 0:
+                                        print("We obtained {}, therefore Not Satisfiable")
+                                        return False
         
         print("Nothing else to be done, therefore it is Satisfiable")
         return True

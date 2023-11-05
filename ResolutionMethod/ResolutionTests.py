@@ -12,12 +12,12 @@ class TestResolution(unittest.TestCase):
 
     def test_not_satisfiable(self):
         clause_set = ClauseSet()
-        clause_set.add_clause({1, -2})
-        clause_set.add_clause({1, 3})
-        clause_set.add_clause({-2, 3})
-        clause_set.add_clause({-1, 2})
-        clause_set.add_clause({2, -3})
-        clause_set.add_clause({-1, -3})
+        clause_set.add_clause({1, -2})      # 1
+        clause_set.add_clause({1, 3})       # 2
+        clause_set.add_clause({-2, 3})      # 3
+        clause_set.add_clause({-1, 2})      # 4
+        clause_set.add_clause({2, -3})      # 5
+        clause_set.add_clause({-1, -3})     # 6
 
         self.assertEqual(False, ResolutionTransformer.apply_resolution(clause_set))
 
