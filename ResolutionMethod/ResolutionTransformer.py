@@ -37,12 +37,7 @@ class ResolutionTransformer:
                             
                             new_literals = cls.get_new_literals(clause_set.clauses, pair, literal)
                             if new_literals not in clause_set.clauses:
-                                if cls.is_clause_tautology(new_literals):
-                                    # print("from ({})({}) we have {}, which is a tautology."\
-                                    #   .format(str(clause_set.clauses[pair[0]].index),
-                                    #   str(clause_set.clauses[pair[1]].index), str(new_literals)))
-                                    pass
-                                else:
+                                if not cls.is_clause_tautology(new_literals):  
                                     clause_set.add_clause(new_literals)
                                     modified = True
                         
