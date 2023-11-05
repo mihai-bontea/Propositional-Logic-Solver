@@ -35,8 +35,8 @@ class ResolutionTransformer:
                                 modified = True
                         
                                 print("from ({})({}) we have {}"\
-                                      .format(str(clause_set.clauses[pair[0]].index)),
-                                      str(clause_set.clauses[pair[1]].index), str(new_literals))
+                                      .format(str(clause_set.clauses[pair[0]].index),
+                                      str(clause_set.clauses[pair[1]].index), str(new_literals)))
 
                                 # We obtained the empty clause!
                                 if len(new_literals) == 0:

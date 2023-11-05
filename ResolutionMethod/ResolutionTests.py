@@ -1,0 +1,25 @@
+import unittest
+from Clause import Clause
+from ClauseSet import ClauseSet
+from ResolutionTransformer import ResolutionTransformer
+
+class TestResolution(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_not_satisfiable(self):
+        clause_set = ClauseSet()
+        clause_set.add_clause({1, -2})
+        clause_set.add_clause({1, 3})
+        clause_set.add_clause({-2, 3})
+        clause_set.add_clause({-1, 2})
+        clause_set.add_clause({2, -3})
+        clause_set.add_clause({-1, -3})
+
+        self.assertEqual(False, ResolutionTransformer.apply_resolution(clause_set))
+
+if __name__ == '__main__':
+    unittest.main()

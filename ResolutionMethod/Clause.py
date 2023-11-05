@@ -20,7 +20,9 @@ class Clause:
     def __len__(self):
         return len(self.literals)
     
-    def __eq__(self, rhs):
+    def __eq__(self, rhs):  
+        if isinstance(rhs, set):
+            return self.literals == rhs
         return self.literals == rhs.literals
 
     def __str__(self): 
