@@ -1,5 +1,4 @@
 class ResolutionTransformer:
-
     @classmethod
     def get_clause_pairs(cls, clauses):
         for i in range(0, len(clauses) - 1):
@@ -28,8 +27,17 @@ class ResolutionTransformer:
     def apply_resolution(cls, clause_set):
         modified = True
         while modified == True:
-            modified = False
-            for literal in clause_set.literal_count.keys():
+            modified, is_not_satisfiable = cls.apply_resolution_once(clause_set)
+            if is_not_satisfiable:
+                return False
+                    
+        print("Nothing else to be done, therefore it is Satisfiable")
+        return True
+    
+    @classmethod
+    def apply_resolution_once(cls, clause_set):
+        modified = False
+        for literal in clause_set.literal_count.keys():
                 if cls.literal_and_complement_appears(clause_set.literal_count, literal):
                     for pair in cls.get_clause_pairs(clause_set.clauses):
                         if clause_set.clauses[pair[0]].contains_literal(literal) and \
@@ -48,7 +56,5 @@ class ResolutionTransformer:
                                     # We obtained the empty clause!
                                     if len(new_literals) == 0:
                                         print("We obtained {}, therefore Not Satisfiable")
-                                        return False
-        
-        print("Nothing else to be done, therefore it is Satisfiable")
-        return True
+                                        return True, True
+        return modified, False
