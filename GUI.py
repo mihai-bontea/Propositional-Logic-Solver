@@ -1,8 +1,5 @@
 import tkinter.messagebox
-from typing import Callable, Optional, Tuple, Union
 import customtkinter
-from customtkinter.windows.widgets.font import CTkFont
-from customtkinter.windows.widgets.image import CTkImage
 import pyperclip
 
 from tkinter import filedialog
@@ -13,7 +10,7 @@ from ExpressionTreeRelated.LogicOperators import *
 
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
-        
+
 
 class GraphicalUserInterface(customtkinter.CTk):
     def __init__(self):
@@ -198,7 +195,7 @@ class GraphicalUserInterface(customtkinter.CTk):
     def clear_textbox(self, textbox):
         textbox.delete("0.0", "end")
 
-    
+
 
 if __name__ == "__main__":
     gui = GraphicalUserInterface()
