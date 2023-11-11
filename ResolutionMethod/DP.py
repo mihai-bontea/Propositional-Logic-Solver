@@ -6,7 +6,7 @@ class DavisPutnamTransformer(ResolutionTransformer):
         modified = False
         repeat = True
 
-        while repeat == True:
+        while repeat:
             repeat = False
             for literal in clause_set.literal_count.keys():
                 if -literal not in clause_set.literal_count.keys() and clause_set.literal_count[literal] != 0:
@@ -22,11 +22,13 @@ class DavisPutnamTransformer(ResolutionTransformer):
     
     @classmethod
     def apply_one_literal_rule(cls, clause_set):
+        modified = False
         while True:
             # Finding a literal that occurs only once in a clause
-            literal_to_delete = next((clause.literals[0] for clause in clause_set.clauses if len(clause) == 1), None)
+            literal_to_delete = next((list(clause.literals)[0] for clause in clause_set.clauses if len(clause) == 1), None)
             if literal_to_delete == None:
                 break
+            modified = True
             
             # Deleting all clauses that contain the literal
             for i in range(len(clause_set.clauses) - 1, -1, -1):
@@ -44,14 +46,23 @@ class DavisPutnamTransformer(ResolutionTransformer):
                     # We obtained the empty clause!
                     if len(clause_set.clauses[i]) == 0:
                         print("We obtained {}, therefore Not Satisfiable")
-                        return False
-
+                        return True, True
+        return modified, False
 
     @classmethod
     def apply_DP(cls, clause_set):
         modified = True
-        while modified == True:
-            modified = cls.apply_pure_literal_rule(clause_set)
+        while modified:
+            modified_plr = cls.apply_pure_literal_rule(clause_set)
+            
+            modified_olr, is_unsatisfiable = cls.apply_one_literal_rule(clause_set)
+            if is_unsatisfiable:
+                return False
 
+            modified_res, is_unsatisfiable = cls.apply_resolution_once(clause_set)
+            if is_unsatisfiable:
+                return False
 
+            modified = modified_plr or modified_olr or modified_res
 
+        return True
