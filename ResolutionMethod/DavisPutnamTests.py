@@ -1,5 +1,4 @@
 import unittest
-from Clause import Clause
 from ClauseSet import ClauseSet
 from DP import DavisPutnamTransformer
 
