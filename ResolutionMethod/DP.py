@@ -10,6 +10,7 @@ class DavisPutnamTransformer(ResolutionTransformer):
             repeat = False
             for literal in clause_set.literal_count.keys():
                 if -literal not in clause_set.literal_count.keys() and clause_set.literal_count[literal] != 0:
+                    # TODO: de pus aici literal in interpretare
                     modified = True
                     repeat = True
                     print("Applying the pure literal rule for literal " + str(literal))
