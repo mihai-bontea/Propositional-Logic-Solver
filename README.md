@@ -89,7 +89,7 @@ Similarly, the formula is turned into NNF, and then the following tautologies ar
 
 ### Example
 
-TBA
+![image](https://github.com/mihai-bontea/Propositional-Logic-Solver/assets/79721547/8c88c6d0-cbf6-4feb-8cc7-1e519c47ea90)
 
 ## The Resolution Method in Propositional Logic
 
