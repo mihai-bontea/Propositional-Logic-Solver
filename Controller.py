@@ -36,6 +36,3 @@ class Controller:
     
     def determine_proposition_type():
         pass
-
-controller = Controller()
-print(controller.convert_to_normal_forms("((F↔G)↔(A↔B))", ConversionType.NNF))

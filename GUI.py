@@ -176,7 +176,10 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.conv_textbox.tag_config("green_color", foreground="green")
         self.conv_textbox.tag_config("red_color", foreground="red")
 
-        result = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"), ConversionType.NNF)
+        conversion_type_str = self.conversion_options_menu.get()
+        conversion_type = ConversionType.__members__.get(conversion_type_str)
+        result = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"),\
+                                                         conversion_type)
         self.conv_textbox.insert("end", '\n')
 
         if isinstance(result, Exception):
