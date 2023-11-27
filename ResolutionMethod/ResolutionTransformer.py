@@ -1,3 +1,5 @@
+from ResolutionResultInfo import *
+
 class ResolutionTransformer:
     @classmethod
     def get_clause_pairs(cls, clauses):
@@ -25,17 +27,18 @@ class ResolutionTransformer:
     
     @classmethod
     def apply_resolution(cls, clause_set):
+        steps = []
         modified = True
         while modified == True:
-            modified, is_not_satisfiable = cls.apply_resolution_once(clause_set)
+            modified, is_not_satisfiable = cls.apply_resolution_once(clause_set, steps)
             if is_not_satisfiable:
-                return False
+                return ResolutionResultInfo(False, steps)
                     
-        print("Nothing else to be done, therefore it is Satisfiable")
-        return True
+        steps.append(("Nothing else to be done, therefore it is satisfiable.", LineEffect.GREEN))
+        return ResolutionResultInfo(True, steps)
     
     @classmethod
-    def apply_resolution_once(cls, clause_set):
+    def apply_resolution_once(cls, clause_set, steps):
         modified = False
         for literal in clause_set.literal_count.keys():
                 if cls.literal_and_complement_appears(clause_set.literal_count, literal):
@@ -48,13 +51,16 @@ class ResolutionTransformer:
                                 if not cls.is_clause_tautology(new_literals):  
                                     clause_set.add_clause(new_literals)
                                     modified = True
-                        
-                                    print("from ({})({}) we have {}"\
+                                    
+                                    description_str = "from ({})({}) we have {}"\
                                         .format(str(clause_set.clauses[pair[0]].index),
-                                        str(clause_set.clauses[pair[1]].index), str(new_literals)))
+                                                str(clause_set.clauses[pair[1]].index),
+                                                str(new_literals))
+                                    
+                                    steps.append((description_str, LineEffect.CYAN))
 
                                     # We obtained the empty clause!
                                     if len(new_literals) == 0:
-                                        print("We obtained {}, therefore Not Satisfiable")
+                                        steps.append(("We obtained {}, therefore not satisfiable.", LineEffect.RED))
                                         return True, True
         return modified, False
