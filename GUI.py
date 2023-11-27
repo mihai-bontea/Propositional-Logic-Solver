@@ -175,6 +175,8 @@ class GraphicalUserInterface(customtkinter.CTk):
     def attempt_convert(self):
         self.conv_textbox.tag_config("green_color", foreground="green")
         self.conv_textbox.tag_config("red_color", foreground="red")
+        self.conv_textbox.tag_config("cyan_color", foreground="cyan")
+        self.conv_textbox.tag_config("underline", underline=True)
 
         conversion_type_str = self.conversion_options_menu.get()
         conversion_type = ConversionType.__members__.get(conversion_type_str)
@@ -188,7 +190,6 @@ class GraphicalUserInterface(customtkinter.CTk):
         else:
             for prop in result:
                 desc, actual = prop.split('\n')
-                # self.conv_textbox.insert("end", prop + '\n')
                 self.conv_textbox.insert("end", desc + '\n', "green_color")
                 self.conv_textbox.insert("end", actual + '\n')
 

@@ -14,11 +14,10 @@ class Controller:
         pass
     
     def convert_to_normal_forms(
-            self,
-            expr: str,
-            conv_type: ConversionType
+        self,
+        expr: str,
+        conv_type: ConversionType
         ):
-
         try:
             postfix = InfixToPostfixConverter.attempt_conversion(expr)
             expression_tree = ExpressionTree(postfix)
