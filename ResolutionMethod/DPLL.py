@@ -1,55 +1,68 @@
 from DP import DavisPutnamTransformer
+from ResolutionResultInfo import *
 import copy
 
 class DPLLTransformer(DavisPutnamTransformer):
 
     @classmethod
     def apply_DPLL(cls, clause_set):
-        result, interpretation = cls.apply_DPLL_rec(clause_set, 1)
+        result = cls.apply_DPLL_rec(clause_set, 1)
         return result
 
     @classmethod
     def apply_DPLL_rec(cls, clause_set, branch_id):
+        steps = []
         interpretation = []
+
+        steps.append(("On branch {}:".format(str(branch_id)), LineEffect.UNDERLINED))
+
         modified = True
         while modified:
-            interpretation_plr = cls.apply_pure_literal_rule(clause_set)
-            interpretation += interpretation_plr
+            modified = False
+            modified_plr = cls.apply_pure_literal_rule(clause_set, steps, interpretation)
 
-            interpretation_olr, is_unsatisfiable = cls.apply_one_literal_rule(clause_set)
-            interpretation += interpretation_olr
+            modified_olr, is_unsatisfiable = cls.apply_one_literal_rule(clause_set, steps, interpretation)
+            modified = modified_plr or modified_olr
+
             if is_unsatisfiable:
-                return False, []
+                return ResolutionResultInfo(False, steps)
             
-            # K' = {}, return True
-            if len(clause_set.clauses) == 0:
-                print("Reached empty clause set, therefore satisfiable for branch " + str(branch_id))
-                return True, interpretation
-            
-            # Otherwise, split
-            print("Splitting branch " + str(branch_id) + " into branches " + str(branch_id * 2) + " and " + str(branch_id * 2 + 1))
+        # K' = {}, return True
+        if len(clause_set.clauses) == 0:
+            description_str = "Reached empty clause set, therefore satisfiable for branch {}.".format(str(branch_id))
+            steps.append((description_str, LineEffect.GREEN))
 
-            # Determining the literal based on which to split 
-            splitting_lit = max(clause_set.literal_count, key=lambda lit: clause_set.literal_count[lit] + clause_set.literal_count[-lit])
-            if splitting_lit == None:
-                break
-            
-            # Copying the set of clauses, and adding a clause to it containing just the literal
-            branch_left = copy.deepcopy(clause_set)
-            branch_left.add_clause([splitting_lit])
+            return ResolutionResultInfo(True, steps, interpretation)
+        
+        # Otherwise, split
+        description_str = "Splitting branch {} into branches {} and {}.".format(str(branch_id), 
+                                                                                str(branch_id * 2), 
+                                                                                str(branch_id * 2 + 1))
+        steps.append((description_str, LineEffect.CYAN))
 
-            left_truth_value, left_intr = cls.apply_DPLL_rec(branch_left, branch_id * 2)
-            if left_truth_value == True:
-                print("Left branch of branch " + str(branch_id) + " is satisfiable, we no longer check right branch")
-                return True, interpretation + left_intr
-            
-            branch_right = copy.deepcopy(clause_set)
-            branch_right.add_clause([-splitting_lit])
+        # Determining the literal based on which to split 
+        splitting_lit = max(clause_set.literal_count, key=lambda lit: clause_set.literal_count[lit] + clause_set.literal_count[-lit])
+        
+        branch_left = copy.deepcopy(clause_set)
+        branch_left.add_clause([splitting_lit])
 
-            right_truth_value, right_intr = cls.apply_DPLL_rec(branch_right, branch_id * 2 + 1)
-            if right_truth_value == True:
-                print("Right branch of branch " + str(branch_id) + " is satisfiable, therefore current branch also satisfiable")
-                return True, interpretation + right_intr
-            else:
-                print("Branch " + str(branch_id) + " is unsatisfiable on both branches")
-                return False, []
+        left_branch_res = cls.apply_DPLL_rec(branch_left, branch_id * 2)
+        if left_branch_res.result == True:
+            description_str = "Left child of branch {} is satisfiable. We no longer check right branch.".format(str(branch_id))
+            steps.append((description_str, LineEffect.GREEN))
+
+            return ResolutionResultInfo(True, steps, interpretation + left_branch_res.interpretation)
+        
+        branch_right = copy.deepcopy(clause_set)
+        branch_right.add_clause([-splitting_lit])
+
+        right_branch_res = cls.apply_DPLL_rec(branch_right, branch_id * 2 + 1)
+        if right_branch_res.result == True:
+            description_str = "Right child of branch {} is satisfiable, therefore current branch is also satisfiable.".format(str(branch_id))
+            steps.append((description_str, LineEffect.GREEN))
+            
+            return ResolutionResultInfo(True, steps, interpretation + right_branch_res.interpretation)
+        else:
+            steps.append(("Branch {} is unsatisfiable on both child branches.".format(str(branch_id)), LineEffect.RED))
+
+            return ResolutionResultInfo(False, steps)
