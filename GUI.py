@@ -7,6 +7,7 @@ from functools import partial
 from Controller import Controller, ConversionType, ResolutionType
 from KeyboardButton import KeyboardButton
 from ExpressionTreeRelated.LogicOperators import *
+from ResolutionMethod.ResolutionResultInfo import *
 
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -116,6 +117,10 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.res_textbox = customtkinter.CTkTextbox(self.tabview.tab("Resolution"), width=700, height=300, font=textbox_font)
         self.res_textbox.grid(row=1, column=0, padx=(80, 80), pady=(20, 10), sticky="n")
 
+        self.apply_button = customtkinter.CTkButton(self.tabview.tab("Resolution"), text="Apply",
+                                                             command=self.attempt_resolution)
+        self.apply_button.grid(row=0, column=0, padx=(250, 0), pady=(10, 10))
+
     def set_default_values(self):
         self.appearance_mode_optionemenu.set("Dark")
         self.scaling_optionemenu.set("100%")
@@ -149,12 +154,15 @@ class GraphicalUserInterface(customtkinter.CTk):
         conversion_type_str = self.conversion_options_menu.get()
         conversion_type = ConversionType.__members__.get(conversion_type_str)
         return ConversionType.NNF if conversion_type == None else conversion_type
+    
+    def get_res_option(self):
+        resolution_type_str = self.resolution_options_menu.get()
+        resolution_type = ResolutionType.__members__.get(resolution_type_str)
+        return ResolutionType.RES if resolution_type == None else resolution_type
 
     def attempt_convert(self):
         self.conv_textbox.tag_config("green_color", foreground="green")
         self.conv_textbox.tag_config("red_color", foreground="red")
-        self.conv_textbox.tag_config("cyan_color", foreground="cyan")
-        self.conv_textbox.tag_config("underline", underline=True)
 
         result = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"),\
                                                          self.get_conv_option())
@@ -169,8 +177,29 @@ class GraphicalUserInterface(customtkinter.CTk):
                 self.conv_textbox.insert("end", desc + '\n', "green_color")
                 self.conv_textbox.insert("end", actual + '\n')
 
-    def attempt_decode(self):
-        pass
+    def attempt_resolution(self):
+        self.res_textbox.tag_config("green_color", foreground="green")
+        self.res_textbox.tag_config("red_color", foreground="red")
+        self.res_textbox.tag_config("cyan_color", foreground="cyan")
+        self.res_textbox.tag_config("underline", underline=True)
+
+        enum_to_tag = {LineEffect.GREEN: "green_color",
+                       LineEffect.RED: "red_color",
+                       LineEffect.CYAN: "cyan_color",
+                       LineEffect.UNDERLINED: "underline"}
+
+        result = self.controller.is_proposition_satisfiable(self.res_textbox.get(1.0, "end-1c"), 
+                                                            self.get_res_option())
+        self.res_textbox.insert("end", '\n')
+        
+        if isinstance(result, Exception):
+            self.res_textbox.insert("end", str(result) + '\n', "red_color")
+        
+        else:
+            for step in result.steps:
+               self.res_textbox.insert("end", step[0] + '\n', enum_to_tag[step[1]]) 
+
+        
 
     def clear_textbox(self, textbox):
         textbox.delete("0.0", "end")
