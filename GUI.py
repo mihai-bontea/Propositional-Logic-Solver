@@ -22,7 +22,6 @@ class GraphicalUserInterface(customtkinter.CTk):
 
         self.create_tabview()
         self.set_conversion_tab()
-        self.set_decoding_tab()
         self.set_default_values()
     
     def configure_window(self):
@@ -39,10 +38,8 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.tabview = customtkinter.CTkTabview(self, width=250)
         self.tabview.grid(row=0, column=1, rowspan=3, padx=(0, 0), pady=(10, 0), sticky="nsew")
         self.tabview.add("Conversion")
-        self.tabview.add("Interpret")
         self.tabview.add("Resolution")
         self.tabview.tab("Conversion").grid_columnconfigure(0, weight=1)
-        self.tabview.tab("Interpret").grid_columnconfigure(0, weight=1)
         self.tabview.tab("Resolution").grid_columnconfigure(0, weight=1)
 
     def create_sidebar(self):
@@ -116,39 +113,11 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.encode_result = customtkinter.CTkLabel(
             self.tabview.tab("Conversion"), text="", font=customtkinter.CTkFont(size=12))
 
-    def set_decoding_tab(self):
-        self.decoding_lsb_option_menu = customtkinter.CTkOptionMenu(self.tabview.tab("Interpret"),
-                                                        values=["1", "2", "3", "4", "5", "6", "7", "8"])
-        self.decoding_lsb_option_menu.grid(row=0, column=0, padx=(0, 250), pady=(10, 10))
-
-        self.decoding_file_selection_button = customtkinter.CTkButton(self.tabview.tab("Interpret"), text="Select a file",
-                                                                      command=self.decoding_upload_action)
-        self.decoding_file_selection_button.grid(row=1, column=0, padx=(0, 250), pady=(10, 10))
-
-        self.decode_button = customtkinter.CTkButton(self.tabview.tab("Interpret"), text="Interpret",
-                                                             command=self.attempt_decode)
-        self.decode_button.grid(row=2, column=0, padx=(0, 250), pady=(10, 10))
-
-        self.mask_label = customtkinter.CTkLabel(self.tabview.tab("Interpret"), text="🔑 Encryption key:", anchor="w")
-        self.mask_label.grid(row=0, column=0, padx=(250, 0), pady=(10, 0))
-
-        self.mask_frame = customtkinter.CTkFrame(self.tabview.tab("Interpret"), width=140, height=30)
-        self.mask_frame.grid(row=1, column=0, padx=(250, 0), pady=(10, 10))
-        self.decoding_mask = tkinter.StringVar()
-        self.mask_entry = customtkinter.CTkEntry(self.mask_frame, textvariable=self.decoding_mask)
-        self.mask_entry.grid(row=1, column=0, padx=(0, 0), pady=(0,0), sticky="we")
-
-        self.decode_result = customtkinter.CTkLabel(
-            self.tabview.tab("Interpret"), text="", font=customtkinter.CTkFont(size=12))        
-        self.decode_secret_message = customtkinter.CTkTextbox(self.tabview.tab("Interpret"), width=10)
-
     def set_default_values(self):
         self.appearance_mode_optionemenu.set("Dark")
         self.scaling_optionemenu.set("100%")
         self.conversion_options_menu.set("Conversion type")
-        self.decoding_lsb_option_menu.set("LSBs used")
         self.copy_button.configure(state="disabled")
-        self.decode_button.configure(state="disabled")
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
