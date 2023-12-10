@@ -168,7 +168,8 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.conv_textbox.tag_config("green_color", foreground="green")
         self.conv_textbox.tag_config("red_color", foreground="red")
 
-        result = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"),\
+        textbox_contents_no_space = self.conv_textbox.get(1.0, "end-1c").replace(" ", "")
+        result = self.controller.convert_to_normal_forms(textbox_contents_no_space,
                                                          self.get_conv_option())
         self.conv_textbox.insert("end", '\n')
 
