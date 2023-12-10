@@ -60,7 +60,7 @@ class Controller:
                 clause = clause.strip()
                 if len(clause) > 0:
                     literal_list = [int(num) for num in clause.split(" ")]
-                    clause_set.add_clause(literal_list)
+                    clause_set.add_clause(set(literal_list))
             
             # Applying the requested resolution method
             if res_type == ResolutionType.RES:

@@ -97,16 +97,13 @@ class GraphicalUserInterface(customtkinter.CTk):
                                                              command=self.attempt_convert)
         self.convert_button.grid(row=0, column=0, padx=(250, 0), pady=(10, 10))
 
-        self.copy_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Download to PDF",
+        self.conv_copy_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Download to PDF",
                                                    command=self.copy_to_clipboard_action)
-        self.copy_button.grid(row=4, column=0, padx=(0, 250), pady=(10, 10))
+        self.conv_copy_button.grid(row=4, column=0, padx=(0, 250), pady=(10, 10))
 
         self.conv_clear_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Clear", 
                                                          command=partial(self.clear_textbox, self.conv_textbox))
         self.conv_clear_button.grid(row=4, column=0, padx=(250, 0), pady=(10, 10))
-
-        self.encode_result = customtkinter.CTkLabel(
-            self.tabview.tab("Conversion"), text="", font=customtkinter.CTkFont(size=12))
         
     def set_resolution_tab(self):
         self.resolution_options_menu = customtkinter.CTkOptionMenu(self.tabview.tab("Resolution"),
@@ -121,12 +118,21 @@ class GraphicalUserInterface(customtkinter.CTk):
                                                              command=self.attempt_resolution)
         self.apply_button.grid(row=0, column=0, padx=(250, 0), pady=(10, 10))
 
+        self.res_copy_button = customtkinter.CTkButton(self.tabview.tab("Resolution"), text="Download to PDF",
+                                                   command=self.copy_to_clipboard_action)
+        self.res_copy_button.grid(row=4, column=0, padx=(0, 250), pady=(10, 10))
+
+        self.res_clear_button = customtkinter.CTkButton(self.tabview.tab("Resolution"), text="Clear", 
+                                                         command=partial(self.clear_textbox, self.res_textbox))
+        self.res_clear_button.grid(row=4, column=0, padx=(250, 0), pady=(10, 10))
+
     def set_default_values(self):
         self.appearance_mode_optionemenu.set("Dark")
         self.scaling_optionemenu.set("100%")
         self.conversion_options_menu.set("Conversion type")
         self.resolution_options_menu.set("Resolution type")
-        self.copy_button.configure(state="disabled")
+        self.conv_copy_button.configure(state="disabled")
+        self.res_copy_button.configure(state="disabled")
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -134,11 +140,6 @@ class GraphicalUserInterface(customtkinter.CTk):
     def change_scaling_event(self, new_scaling: str):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         customtkinter.set_widget_scaling(new_scaling_float)
-
-    def encoding_upload_action(self,event=None):
-        self.encoding_filename = filedialog.askopenfilename()
-        self.convert_button.configure(state="normal")
-        self.copy_button.configure(state="disabled")
     
     def decoding_upload_action(self):
         self.decoding_filename = filedialog.askopenfilename()
@@ -150,6 +151,9 @@ class GraphicalUserInterface(customtkinter.CTk):
     def copy_to_clipboard_action(self):
         pyperclip.copy(str(self.mask))
     
+    def clear_textbox(self, textbox):
+        textbox.delete("0.0", "end")
+
     def get_conv_option(self):
         conversion_type_str = self.conversion_options_menu.get()
         conversion_type = ConversionType.__members__.get(conversion_type_str)
@@ -198,12 +202,6 @@ class GraphicalUserInterface(customtkinter.CTk):
         else:
             for step in result.steps:
                self.res_textbox.insert("end", step[0] + '\n', enum_to_tag[step[1]]) 
-
-        
-
-    def clear_textbox(self, textbox):
-        textbox.delete("0.0", "end")
-
 
 
 if __name__ == "__main__":
