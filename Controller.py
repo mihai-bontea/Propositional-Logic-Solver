@@ -9,6 +9,13 @@ class ConversionType(Enum):
     CNF = 2
     DNF = 3
 
+
+class ResolutionType(Enum):
+    RES = 1
+    DP = 2
+    DPLL = 3
+
+
 class Controller:
     def __init__(self) -> None:
         pass
@@ -33,5 +40,9 @@ class Controller:
         except Exception as exc:
             return exc
     
-    def determine_proposition_type():
+    def is_proposition_satisfiable(
+        self,
+        clauses: list,
+        res_type: ResolutionType
+    ):
         pass

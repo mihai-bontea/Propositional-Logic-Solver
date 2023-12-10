@@ -1,4 +1,4 @@
-from ResolutionResultInfo import *
+from .ResolutionResultInfo import *
 
 class ResolutionTransformer:
     @classmethod

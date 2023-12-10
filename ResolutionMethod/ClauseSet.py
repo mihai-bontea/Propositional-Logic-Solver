@@ -1,5 +1,5 @@
-from Clause import Clause
-from ResolutionTransformer import ResolutionTransformer
+from .Clause import Clause
+from .ResolutionTransformer import ResolutionTransformer
 
 class ClauseSet:
     def __init__(self):

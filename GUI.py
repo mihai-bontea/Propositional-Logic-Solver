@@ -4,7 +4,7 @@ import pyperclip
 
 from tkinter import filedialog
 from functools import partial
-from Controller import Controller, ConversionType
+from Controller import Controller, ConversionType, ResolutionType
 from KeyboardButton import KeyboardButton
 from ExpressionTreeRelated.LogicOperators import *
 

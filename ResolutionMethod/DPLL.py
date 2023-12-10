@@ -1,5 +1,5 @@
-from DP import DavisPutnamTransformer
-from ResolutionResultInfo import *
+from .DP import DavisPutnamTransformer
+from .ResolutionResultInfo import *
 import copy
 
 class DPLLTransformer(DavisPutnamTransformer):

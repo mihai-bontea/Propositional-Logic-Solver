@@ -1,5 +1,5 @@
-from ResolutionTransformer import ResolutionTransformer
-from ResolutionResultInfo import *
+from .ResolutionTransformer import ResolutionTransformer
+from .ResolutionResultInfo import *
 
 class DavisPutnamTransformer(ResolutionTransformer):
     @classmethod
