@@ -22,6 +22,7 @@ class GraphicalUserInterface(customtkinter.CTk):
 
         self.create_tabview()
         self.set_conversion_tab()
+        self.set_resolution_tab()
         self.set_default_values()
     
     def configure_window(self):
@@ -66,13 +67,6 @@ class GraphicalUserInterface(customtkinter.CTk):
                                                         values=["NNF", "CNF", "DNF"])
         self.conversion_options_menu.grid(row=0, column=0, padx=(0, 250), pady=(10, 10))
 
-        # self.checkbox = customtkinter.CTkCheckBox(self.tabview.tab("Conversion"), text="Use Encryption")
-        # self.checkbox.grid(row = 0, column = 0, padx=(250, 0), pady=(10, 10))
-
-        # self.encoding_file_selection_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Select a file",
-                                                                    #   command=self.encoding_upload_action)
-        # self.encoding_file_selection_button.grid(row=1, column=0, padx=(0, 250), pady=(10, 10))
-
         textbox_font = customtkinter.CTkFont(size=20, family="Times")
         self.conv_textbox = customtkinter.CTkTextbox(self.tabview.tab("Conversion"), width=700, height=300, font=textbox_font)
         self.conv_textbox.grid(row=1, column=0, padx=(80, 80), pady=(20, 10), sticky="n")
@@ -112,11 +106,21 @@ class GraphicalUserInterface(customtkinter.CTk):
 
         self.encode_result = customtkinter.CTkLabel(
             self.tabview.tab("Conversion"), text="", font=customtkinter.CTkFont(size=12))
+        
+    def set_resolution_tab(self):
+        self.resolution_options_menu = customtkinter.CTkOptionMenu(self.tabview.tab("Resolution"),
+                                                        values=["Resolution", "DP", "DPLL"])
+        self.resolution_options_menu.grid(row=0, column=0, padx=(0, 250), pady=(10, 10))
+
+        textbox_font = customtkinter.CTkFont(size=20, family="Times")
+        self.res_textbox = customtkinter.CTkTextbox(self.tabview.tab("Resolution"), width=700, height=300, font=textbox_font)
+        self.res_textbox.grid(row=1, column=0, padx=(80, 80), pady=(20, 10), sticky="n")
 
     def set_default_values(self):
         self.appearance_mode_optionemenu.set("Dark")
         self.scaling_optionemenu.set("100%")
         self.conversion_options_menu.set("Conversion type")
+        self.resolution_options_menu.set("Resolution type")
         self.copy_button.configure(state="disabled")
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
@@ -141,16 +145,19 @@ class GraphicalUserInterface(customtkinter.CTk):
     def copy_to_clipboard_action(self):
         pyperclip.copy(str(self.mask))
     
+    def get_conv_option(self):
+        conversion_type_str = self.conversion_options_menu.get()
+        conversion_type = ConversionType.__members__.get(conversion_type_str)
+        return ConversionType.NNF if conversion_type == None else conversion_type
+
     def attempt_convert(self):
         self.conv_textbox.tag_config("green_color", foreground="green")
         self.conv_textbox.tag_config("red_color", foreground="red")
         self.conv_textbox.tag_config("cyan_color", foreground="cyan")
         self.conv_textbox.tag_config("underline", underline=True)
 
-        conversion_type_str = self.conversion_options_menu.get()
-        conversion_type = ConversionType.__members__.get(conversion_type_str)
         result = self.controller.convert_to_normal_forms(self.conv_textbox.get(1.0, "end-1c"),\
-                                                         conversion_type)
+                                                         self.get_conv_option())
         self.conv_textbox.insert("end", '\n')
 
         if isinstance(result, Exception):
