@@ -113,7 +113,7 @@ commonly used by SAT-solvers.
 
 ### Example
 
-![image](https://github.com/mihai-bontea/Propositional-Logic-Solver/assets/79721547/4499cc7f-3d15-4dad-9da2-1e0a9d32d9d8)
+![image](https://github.com/mihai-bontea/Prop.-Logic-Solver/assets/79721547/8daa989d-fc60-4c12-befb-bcd02b8188b4)
 
 ### Method of solving
 
