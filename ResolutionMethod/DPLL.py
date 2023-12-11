@@ -47,6 +47,7 @@ class DPLLTransformer(DavisPutnamTransformer):
         branch_left.add_clause([splitting_lit])
 
         left_branch_res = cls.apply_DPLL_rec(branch_left, branch_id * 2)
+        steps += left_branch_res.steps
         if left_branch_res.result == True:
             description_str = "Left child of branch {} is satisfiable. We no longer check right branch.".format(str(branch_id))
             steps.append((description_str, LineEffect.GREEN))
@@ -57,6 +58,7 @@ class DPLLTransformer(DavisPutnamTransformer):
         branch_right.add_clause([-splitting_lit])
 
         right_branch_res = cls.apply_DPLL_rec(branch_right, branch_id * 2 + 1)
+        steps += right_branch_res.steps
         if right_branch_res.result == True:
             description_str = "Right child of branch {} is satisfiable, therefore current branch is also satisfiable.".format(str(branch_id))
             steps.append((description_str, LineEffect.GREEN))
