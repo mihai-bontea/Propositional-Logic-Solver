@@ -111,6 +111,10 @@ The following three algorithms receive the input as 0-separated clauses, where e
 represent the negation of an atom. As an example, the clause set **{{A ∨ B}, {A ∨ ¬C}}** would be represented as **1 2 0 1 -3**. This format is 
 commonly used by SAT-solvers.
 
+### Example
+
+![image](https://github.com/mihai-bontea/Propositional-Logic-Solver/assets/79721547/4499cc7f-3d15-4dad-9da2-1e0a9d32d9d8)
+
 ### Method of solving
 
 The user can choose one of the following algorithms to determine the satisfiability of the formula. The input format is the same for all of them.
