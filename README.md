@@ -182,6 +182,7 @@ If a literal occurs only positively or negatively in the clause set, delete all 
 * splitting
 The satisfiability of K' is reduced to the satisfiability of K' ∪ {{L}}, K' ∪ {{¬L}}. 
 (K' is satisfiable exactly if one of the two is).
+```
 
 ## Architecture
 
