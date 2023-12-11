@@ -25,6 +25,10 @@ class Clause:
             return self.literals == rhs
         return self.literals == rhs.literals
 
-    def __str__(self): 
-        comma_separated_str = ", ".join(str(num) for num in self.literals)      
-        return "({} [{}])".format(str(self.index), comma_separated_str)
+    @staticmethod
+    def style_converter(num: int):
+        return "{}F{}".format('¬' if num < 0 else '', abs(num))
+
+    def __str__(self):
+        comma_separated_str = ", ".join(str(self.style_converter(num)) for num in self.literals)      
+        return "(" + str(self.index) + ") " + "{" + comma_separated_str + "}"

@@ -8,6 +8,12 @@ class ClauseSet:
         self.literal_count = {}
 
     def add_clause(self, literals: set):
+        # Creating a new clause out of the literals
+        clause = Clause(literals, self.index)
+
+        if clause in self.clauses:
+            return None
+
         # Updating the literal count
         for literal in literals:
             if literal in self.literal_count:
@@ -15,10 +21,9 @@ class ClauseSet:
             else:
                 self.literal_count[literal] = 1
         
-        # Creating a new clause out of the literals
-        clause = Clause(literals, self.index)
         self.index += 1
         self.clauses.append(clause)
+        return clause
     
     def remove_clause(self, index: int):
         # Updating the literal count

@@ -1,4 +1,5 @@
 from .ResolutionResultInfo import *
+from .Clause import Clause
 
 class ResolutionTransformer:
     @classmethod
@@ -48,14 +49,14 @@ class ResolutionTransformer:
                             
                             new_literals = cls.get_new_literals(clause_set.clauses, pair, literal)
                             if new_literals not in clause_set.clauses:
-                                if not cls.is_clause_tautology(new_literals):  
-                                    clause_set.add_clause(new_literals)
+                                if not cls.is_clause_tautology(new_literals): 
+                                    new_clause = clause_set.add_clause(new_literals)
                                     modified = True
                                     
-                                    description_str = "from ({})({}) we have {}"\
+                                    description_str = "From ({})({}) we have {}"\
                                         .format(str(clause_set.clauses[pair[0]].index),
                                                 str(clause_set.clauses[pair[1]].index),
-                                                str(new_literals))
+                                                str(new_clause))
                                     
                                     steps.append((description_str, LineEffect.CYAN))
 
