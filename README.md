@@ -1,10 +1,5 @@
 # Propositional Logic Solver
 
-## Computing Truth Value
-
-The program allows formulas given in **relaxed syntax**, by assigning different priorities for the *propositional connectives*.
-The order followed is: ↔, →, ∨, ∧, ¬ (decreasing).
-
 ## Normal Forms
 
 A formula F is in **negation normal form (NNF)**, iff:
@@ -21,6 +16,9 @@ each of F1, ..., Fn is a disjunction of literals.
 
 The program is transforming the formula into NNF by applying the following formulae directly on the syntax tree representation 
 of the given formula.
+
+Formulas given in **relaxed syntax** are allowed, by assigning different priorities for the *propositional connectives*.
+The order followed is: ↔, →, ∨, ∧, ¬ (decreasing).
 
 <details><summary>Formulae used in NNF conversion</summary>
 <p>
@@ -184,3 +182,9 @@ If a literal occurs only positively or negatively in the clause set, delete all 
 * splitting
 The satisfiability of K' is reduced to the satisfiability of K' ∪ {{L}}, K' ∪ {{¬L}}. 
 (K' is satisfiable exactly if one of the two is).
+
+## Architecture
+
+The application is written with the **model-view-controller(MVC)** design pattern in mind. The domain is split between *ResolutionMethod* and *ExpressionTreeRelated*
+
+![class_diagram](https://github.com/mihai-bontea/Prop.-Logic-Solver/assets/79721547/622cbbb4-9e75-4bbd-82f7-9bd02e346462)
