@@ -185,6 +185,6 @@ The satisfiability of K' is reduced to the satisfiability of K' âˆª {{L}}, K' âˆ
 
 ## Architecture
 
-The application is written with the **model-view-controller(MVC)** design pattern in mind. The domain is split between *ResolutionMethod* and *ExpressionTreeRelated*
+The application is written with the **model-view-controller(MVC)** design pattern in mind. The domain is split between *ResolutionMethod* and *ExpressionTreeRelated*.
 
 ![class_diagram](https://github.com/mihai-bontea/Prop.-Logic-Solver/assets/79721547/622cbbb4-9e75-4bbd-82f7-9bd02e346462)
