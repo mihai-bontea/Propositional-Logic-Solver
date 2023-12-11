@@ -184,6 +184,9 @@ The satisfiability of K' is reduced to the satisfiability of K' âˆª {{L}}, K' âˆ
 (K' is satisfiable exactly if one of the two is).
 ```
 
+</p>
+</details>
+
 ## Architecture
 
 The application is written with the **model-view-controller(MVC)** design pattern in mind. The domain is split between *ResolutionMethod* and *ExpressionTreeRelated*
