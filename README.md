@@ -118,7 +118,7 @@ commonly used by SAT-solvers.
 ### Method of solving
 
 The user can choose one of the following algorithms to determine the satisfiability of the formula. The input format is the same for all of them.
-No steps are skipped, providing a verifiable output which resembles how one would solve the task on paper. **Pseudocode and output examples available below.**
+No steps are skipped, providing a verifiable output which resembles how one would solve the task on paper. **Pseudocode available below.**
 
 <details><summary>Propositional Resolution</summary>
 <p>
