@@ -132,10 +132,6 @@ do
 answer: "Satisfiable"
 ```
 
-#### Output example:
-
-TBA
-
 </p>
 </details>
 
@@ -158,10 +154,6 @@ Apply propositional resolution on the remaining clauses.
 answer: "Satisfiable" when none of the rules can be applied
         "Not Satisfiable" when the empty clause is generated
 ```
-
-#### Output example:
-
-TBA
 
 </p>
 </details>
