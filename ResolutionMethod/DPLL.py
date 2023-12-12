@@ -1,5 +1,6 @@
 from .DP import DavisPutnamTransformer
 from .ResolutionResultInfo import *
+import concurrent.futures
 import copy
 
 class DPLLTransformer(DavisPutnamTransformer):
@@ -42,29 +43,33 @@ class DPLLTransformer(DavisPutnamTransformer):
 
         # Determining the literal based on which to split 
         splitting_lit = max(clause_set.literal_count, key=lambda lit: clause_set.literal_count[lit] + clause_set.literal_count[-lit])
-        
+
         branch_left = copy.deepcopy(clause_set)
         branch_left.add_clause([splitting_lit])
 
-        left_branch_res = cls.apply_DPLL_rec(branch_left, branch_id * 2)
-        steps += left_branch_res.steps
-        if left_branch_res.result == True:
-            description_str = "Left child of branch {} is satisfiable. We no longer check right branch.".format(str(branch_id))
-            steps.append((description_str, LineEffect.GREEN))
-
-            return ResolutionResultInfo(True, steps, interpretation + left_branch_res.interpretation)
-        
         branch_right = copy.deepcopy(clause_set)
         branch_right.add_clause([-splitting_lit])
 
-        right_branch_res = cls.apply_DPLL_rec(branch_right, branch_id * 2 + 1)
-        steps += right_branch_res.steps
-        if right_branch_res.result == True:
-            description_str = "Right child of branch {} is satisfiable, therefore current branch is also satisfiable.".format(str(branch_id))
-            steps.append((description_str, LineEffect.GREEN))
-            
-            return ResolutionResultInfo(True, steps, interpretation + right_branch_res.interpretation)
-        else:
-            steps.append(("Branch {} is unsatisfiable on both child branches.".format(str(branch_id)), LineEffect.RED))
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            left_branch_res_future = executor.submit(cls.apply_DPLL_rec, branch_left, branch_id * 2)
+            right_branch_res_future = executor.submit(cls.apply_DPLL_rec, branch_right, branch_id * 2 + 1)
 
-            return ResolutionResultInfo(False, steps)
+            left_branch_res = left_branch_res_future.result()
+            steps += left_branch_res.steps
+            if left_branch_res.result == True:
+                description_str = "Left child of branch {} is satisfiable. We no longer check right branch.".format(str(branch_id))
+                steps.append((description_str, LineEffect.GREEN))
+
+                return ResolutionResultInfo(True, steps, interpretation + left_branch_res.interpretation)
+
+            right_branch_res = right_branch_res_future.result()
+            steps += right_branch_res.steps
+            if right_branch_res.result == True:
+                description_str = "Right child of branch {} is satisfiable, therefore current branch is also satisfiable.".format(str(branch_id))
+                steps.append((description_str, LineEffect.GREEN))
+                
+                return ResolutionResultInfo(True, steps, interpretation + right_branch_res.interpretation)
+            else:
+                steps.append(("Branch {} is unsatisfiable on both child branches.".format(str(branch_id)), LineEffect.RED))
+
+                return ResolutionResultInfo(False, steps)
