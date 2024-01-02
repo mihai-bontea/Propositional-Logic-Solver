@@ -1,5 +1,4 @@
 from .ResolutionResultInfo import *
-from .Clause import Clause
 
 class ResolutionTransformer:
     @classmethod

@@ -1,6 +1,4 @@
-import tkinter.messagebox
 import customtkinter
-import pyperclip
 
 from tkinter import filedialog
 from functools import partial
@@ -98,7 +96,7 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.convert_button.grid(row=0, column=0, padx=(250, 0), pady=(10, 10))
 
         self.conv_copy_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Download to PDF",
-                                                   command=self.copy_to_clipboard_action)
+                                                   command=lambda: None)
         self.conv_copy_button.grid(row=4, column=0, padx=(0, 250), pady=(10, 10))
 
         self.conv_clear_button = customtkinter.CTkButton(self.tabview.tab("Conversion"), text="Clear", 
@@ -119,7 +117,7 @@ class GraphicalUserInterface(customtkinter.CTk):
         self.apply_button.grid(row=0, column=0, padx=(250, 0), pady=(10, 10))
 
         self.res_copy_button = customtkinter.CTkButton(self.tabview.tab("Resolution"), text="Download to PDF",
-                                                   command=self.copy_to_clipboard_action)
+                                                   command=lambda: None)
         self.res_copy_button.grid(row=4, column=0, padx=(0, 250), pady=(10, 10))
 
         self.res_clear_button = customtkinter.CTkButton(self.tabview.tab("Resolution"), text="Clear", 
@@ -141,15 +139,8 @@ class GraphicalUserInterface(customtkinter.CTk):
         new_scaling_float = int(new_scaling.replace("%", "")) / 100
         customtkinter.set_widget_scaling(new_scaling_float)
     
-    def decoding_upload_action(self):
-        self.decoding_filename = filedialog.askopenfilename()
-        self.decode_button.configure(state="normal")
-    
     def select_output_path(self, extension):
         return filedialog.asksaveasfilename(defaultextension=extension) 
-    
-    def copy_to_clipboard_action(self):
-        pyperclip.copy(str(self.mask))
     
     def clear_textbox(self, textbox):
         textbox.delete("0.0", "end")
