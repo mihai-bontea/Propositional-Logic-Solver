@@ -1,7 +1,7 @@
 import unittest
-from InfixToPostfix import InfixToPostfixConverter
-from ExpressionTree import ExpressionTree
-from AnnihilationLawTransformer import AnnihilationLawTransformer
+from ExpressionTreeRelated.InfixToPostfix import InfixToPostfixConverter
+from ExpressionTreeRelated.ExpressionTree import ExpressionTree
+from ExpressionTreeRelated.AnnihilationLawTransformer import AnnihilationLawTransformer
 
 class TestAnnihilationLawTransformer(unittest.TestCase):
 

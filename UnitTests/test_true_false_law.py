@@ -1,7 +1,7 @@
 import unittest
-from InfixToPostfix import InfixToPostfixConverter
-from ExpressionTree import ExpressionTree
-from TrueFalseLawTransformer import TrueFalseLawTransformer
+from ExpressionTreeRelated.InfixToPostfix import InfixToPostfixConverter
+from ExpressionTreeRelated.ExpressionTree import ExpressionTree
+from ExpressionTreeRelated.TrueFalseLawTransformer import TrueFalseLawTransformer
 
 class TestTrueFalseLawTransformer(unittest.TestCase):
 

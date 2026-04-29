@@ -1,7 +1,7 @@
 import unittest
-from InfixToPostfix import InfixToPostfixConverter
-from ExpressionTree import ExpressionTree
-from ReductionLawEquivTransformer import ReductionLawEquivTransformer
+from ExpressionTreeRelated.InfixToPostfix import InfixToPostfixConverter
+from ExpressionTreeRelated.ExpressionTree import ExpressionTree
+from ExpressionTreeRelated.ReductionLawEquivTransformer import ReductionLawEquivTransformer
 
 class TestReductionLawEquivTransformer(unittest.TestCase):
 

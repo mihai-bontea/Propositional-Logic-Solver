@@ -1,7 +1,7 @@
 import unittest
-from InfixToPostfix import InfixToPostfixConverter
-from ExpressionTree import ExpressionTree
-from AbsorbtionLawTransformer import AbsorbtionLawTransformer
+from ExpressionTreeRelated.InfixToPostfix import InfixToPostfixConverter
+from ExpressionTreeRelated.ExpressionTree import ExpressionTree
+from ExpressionTreeRelated.AbsorbtionLawTransformer import AbsorbtionLawTransformer
 
 class TestAbsorbtionLawTransformer(unittest.TestCase):
 

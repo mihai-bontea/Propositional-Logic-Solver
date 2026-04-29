@@ -1,7 +1,7 @@
 import unittest
-from InfixToPostfix import InfixToPostfixConverter
-from ExpressionTree import ExpressionTree
-from DeMorganLawTransformer import DeMorganLawTransformer
+from ExpressionTreeRelated.InfixToPostfix import InfixToPostfixConverter
+from ExpressionTreeRelated.ExpressionTree import ExpressionTree
+from ExpressionTreeRelated.DeMorganLawTransformer import DeMorganLawTransformer
 
 class TestDeMorganLawTransformer(unittest.TestCase):
 

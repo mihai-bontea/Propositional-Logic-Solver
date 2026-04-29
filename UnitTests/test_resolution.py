@@ -1,6 +1,6 @@
 import unittest
-from ClauseSet import ClauseSet
-from ResolutionTransformer import ResolutionTransformer
+from ResolutionMethod.ClauseSet import ClauseSet
+from ResolutionMethod.ResolutionTransformer import ResolutionTransformer
 
 class TestResolution(unittest.TestCase):
     def setUp(self):

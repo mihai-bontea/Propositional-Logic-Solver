@@ -1,7 +1,7 @@
 import unittest
-from InfixToPostfix import InfixToPostfixConverter
-from ExpressionTree import ExpressionTree
-from ConversionTautologies import TautologiesConverter
+from ExpressionTreeRelated.InfixToPostfix import InfixToPostfixConverter
+from ExpressionTreeRelated.ExpressionTree import ExpressionTree
+from ExpressionTreeRelated.ConversionTautologies import TautologiesConverter
 
 class TestIdempocyLawTransformer(unittest.TestCase):
 
