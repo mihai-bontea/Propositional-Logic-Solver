@@ -102,6 +102,9 @@ class ExpressionTree:
         if tautologies_summary != "":
             steps_str_list.append(tautologies_summary)
         
+        # Re-run NNF step, tautologies might have opened new possibilities for simplification
+        steps_str_list.extend(self.convert_to_NNF())
+        
         return steps_str_list
 
     def convert_to_CNF(self) -> list:
@@ -109,6 +112,9 @@ class ExpressionTree:
         tautologies_summary = TautologiesConverter.apply(self, CONJ, DISJ)
         if tautologies_summary != "":
             steps_str_list.append(tautologies_summary)
+
+        # Re-run NNF step, tautologies might have opened new possibilities for simplification
+        steps_str_list.extend(self.convert_to_NNF())
         
         return steps_str_list
     
