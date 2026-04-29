@@ -35,6 +35,7 @@ class AbsorbtionLawTransformer(LawTransformerBase):
         prev_str = expression_tree.inorder_parentheses()
 
         root_info = AbsorbtionLawTransformer.apply_absorbtion(expression_tree.root)
+        root_info = AbsorbtionLawTransformer.apply_special_case(root_info.node)
         expression_tree.root = root_info.node
         result_str = root_info.get_resulting_str()
 
@@ -72,6 +73,44 @@ class AbsorbtionLawTransformer(LawTransformerBase):
         # Negation
         elif node.value == NEG:
             left_child_info = AbsorbtionLawTransformer.apply_absorbtion(node.left)
+            node.left = left_child_info.node
+            str_left = left_child_info.get_resulting_str()
+            return ReturnStruct(node, str_left)
+        # Atom
+        else:
+            return ReturnStruct(node)
+        
+    @staticmethod
+    def apply_special_case(node):
+        # Binary connectives
+        if node.value in CONNECTIVES:
+            left_child_info = AbsorbtionLawTransformer.apply_special_case(node.left)
+            node.left = left_child_info.node
+            str_left = left_child_info.get_resulting_str()
+
+            right_child_info = AbsorbtionLawTransformer.apply_special_case(node.right)
+            node.right = right_child_info.node
+            str_right = right_child_info.get_resulting_str()
+
+            # Simplifying A or (A or B) into (A or B)
+            if node.value == DISJ:
+                if len(str_left) < len(str_right):
+                    if node.right.value == DISJ:
+                        # check if str_left is 'half' the str_right expression
+                        if AbsorbtionLawTransformer.is_operand_of(str_left, right_child_info):
+                            return right_child_info
+
+                elif len(str_right) < len(str_left):
+                    if node.left.value == DISJ:
+                        # check if str_right is 'half' the str_left expression
+                        if AbsorbtionLawTransformer.is_operand_of(str_right, left_child_info):
+                            return left_child_info
+
+            return ReturnStruct(node, str_left, str_right)
+        
+        # Negation
+        elif node.value == NEG:
+            left_child_info = AbsorbtionLawTransformer.apply_special_case(node.left)
             node.left = left_child_info.node
             str_left = left_child_info.get_resulting_str()
             return ReturnStruct(node, str_left)
