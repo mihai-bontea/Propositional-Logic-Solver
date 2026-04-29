@@ -41,16 +41,25 @@ class TestAbsorbtionLawTransformer(unittest.TestCase):
         expression_tree = ExpressionTree(postfix)
         self.assertEqual(self.law_description + "(¬F)", AbsorbtionLawTransformer.apply_law(expression_tree))
     
-    def test_special_case(self):
+    def test_special_case_disj(self):
         postfix = InfixToPostfixConverter.attempt_conversion("A∨(A∨B)")
         expression_tree = ExpressionTree(postfix)
         self.assertEqual(self.law_description + "(A∨B)", AbsorbtionLawTransformer.apply_law(expression_tree))
     
-    def test_special_case_mirrored(self):
+    def test_special_case_disj_mirrored(self):
         postfix = InfixToPostfixConverter.attempt_conversion("(B∨A)∨A")
         expression_tree = ExpressionTree(postfix)
         self.assertEqual(self.law_description + "(B∨A)", AbsorbtionLawTransformer.apply_law(expression_tree))
 
+    def test_special_case_conj(self):
+        postfix = InfixToPostfixConverter.attempt_conversion("A∧(A∧B)")
+        expression_tree = ExpressionTree(postfix)
+        self.assertEqual(self.law_description + "(A∧B)", AbsorbtionLawTransformer.apply_law(expression_tree))
+    
+    def test_special_case_conj_mirrored(self):
+        postfix = InfixToPostfixConverter.attempt_conversion("(B∧A)∧A")
+        expression_tree = ExpressionTree(postfix)
+        self.assertEqual(self.law_description + "(B∧A)", AbsorbtionLawTransformer.apply_law(expression_tree))
     
 
 if __name__ == '__main__':

@@ -93,15 +93,15 @@ class AbsorbtionLawTransformer(LawTransformerBase):
             str_right = right_child_info.get_resulting_str()
 
             # Simplifying A or (A or B) into (A or B)
-            if node.value == DISJ:
+            if node.value in (DISJ, CONJ):
                 if len(str_left) < len(str_right):
-                    if node.right.value == DISJ:
+                    if node.right.value in (DISJ, CONJ) and node.value == node.right.value:
                         # check if str_left is 'half' the str_right expression
                         if AbsorbtionLawTransformer.is_operand_of(str_left, right_child_info):
                             return right_child_info
 
                 elif len(str_right) < len(str_left):
-                    if node.left.value == DISJ:
+                    if node.left.value in (DISJ, CONJ) and node.value == node.left.value:
                         # check if str_right is 'half' the str_left expression
                         if AbsorbtionLawTransformer.is_operand_of(str_right, left_child_info):
                             return left_child_info
