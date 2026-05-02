@@ -67,20 +67,38 @@ class TestController(unittest.TestCase):
         # print(final_dnf_expression)
         self.assertFalse(self.contains_invalid_characters(final_dnf_expression, self.whitelist_nnf))
 
-    def test_resolution(self):
+    def test_resolution_true(self):
         # Example of a satisfiable clause set
         clauses_str = "1 2 0 1 -3 0 -1 3 0 -1 -2"
         res_result_info = self.controller.is_proposition_satisfiable(clauses_str, ResolutionType.RES)
         self.assertTrue(res_result_info.result)
     
-    def test_dp(self):
+    def test_dp_true(self):
         # Example of a satisfiable clause set
         clauses_str = "1 2 0 1 -3 0 -1 3 0 -1 -2"
         res_result_info = self.controller.is_proposition_satisfiable(clauses_str, ResolutionType.DP)
         self.assertTrue(res_result_info.result)
     
-    def test_dpll(self):
+    def test_dpll_true(self):
         # Example of a satisfiable clause set
         clauses_str = "1 2 0 1 -3 0 -1 3 0 -1 -2"
         res_result_info = self.controller.is_proposition_satisfiable(clauses_str, ResolutionType.DPLL)
         self.assertTrue(res_result_info.result)
+    
+    def test_resolution_false(self):
+        # Example of an unsatisfiable clause set
+        clauses_str = "1 2 0 -1 2 0 1 -2 0 -1 -2 0"
+        res_result_info = self.controller.is_proposition_satisfiable(clauses_str, ResolutionType.RES)
+        self.assertFalse(res_result_info.result)
+    
+    def test_dp_false(self):
+        # Example of an unsatisfiable clause set
+        clauses_str = "1 2 0 -1 2 0 1 -2 0 -1 -2 0"
+        res_result_info = self.controller.is_proposition_satisfiable(clauses_str, ResolutionType.DP)
+        self.assertFalse(res_result_info.result)
+    
+    def test_dpll_false(self):
+        # Example of an unsatisfiable clause set
+        clauses_str = "1 2 0 -1 2 0 1 -2 0 -1 -2 0"
+        res_result_info = self.controller.is_proposition_satisfiable(clauses_str, ResolutionType.DPLL)
+        self.assertFalse(res_result_info.result)
